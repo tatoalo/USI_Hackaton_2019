@@ -1,20 +1,14 @@
-
 from fastapi import FastAPI
-from pydantic import BaseModel
+import classes as c
 
 app = FastAPI()
 
-
-class Buss(BaseModel):
-    item_id: int
-    ID: int
-    address:str
-    price: float
-
 bus16 = {"item_id":16,"ID":1,"address":"Pocomaco","price":20}
 
+
+
 @app.post("/items/")
-async def create_item(item: Buss):
+async def create_item(item: c.Bus):
     return item
 
 a = create_item(bus16)
@@ -29,5 +23,5 @@ def read_item(item_id: int):
     return Buss(**data)
 
 @app.put("/items/{item_id}")
-def update_item(item_id: int, item: Buss):
+def update_item(item_id: int, item: c.Bus):
     return {"item_name": item.name, "item_id": item_id}
