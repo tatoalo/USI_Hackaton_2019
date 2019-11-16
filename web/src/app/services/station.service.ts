@@ -1,10 +1,12 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { environment } from "../../environments/environment";
 
 
 @Injectable
 export class StationService {
-    url = "/stations"
+    url = environment.api_url + "/stations"
+    
     constructor(private http: HttpClient) { }
 
     public get_all_bike_stations() {

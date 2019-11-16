@@ -1,10 +1,12 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, Headers } from "@angular/common/http";
+import { environment } from "../../environments/environment";
 
 
 @Injectable
 export class UserService {
-    url = "/users"
+    url = environment.api_url + "/users"
+
     constructor(private http: HttpClient) { }
 
     public get_one(id: umber) {

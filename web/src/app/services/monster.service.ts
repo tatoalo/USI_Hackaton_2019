@@ -1,10 +1,12 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { environment } from "../../environments/environment";
 
 
 @Injectable
 export class MonsterService {
-    url = "/monsters"
+    url = environment.api_url + "/monsters"
+    
     constructor(private http: HttpClient) { }
 
     public get_all() {
