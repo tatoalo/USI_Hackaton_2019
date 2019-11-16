@@ -1,32 +1,31 @@
-from typing import Tuple
+import asyncio
 import os
+from typing import Tuple
 
 import aiohttp
-import asyncio
+from backend.database.user import create_new_user_fight, get_user, update_user_fight, update_user_stats
 
-from backend.database.user import get_user, update_user_stats, update_user_fight, create_new_user_fight
+from ..classes import Coords, JourneyType, JourneyUpdate, Pollution, RegisterJourney, User
 from ..database.monster import get_all_monsters, get_monster
 from ..elastic.pollution import get_current_pollution
-from ..monster_status import damage, choose_monster, obtain_xp, update_xp_required
-from ..classes import RegisterJourney, JourneyUpdate, Coords, JourneyType, User
 from ..exceptions import RouteNotFoundError
+from ..monster_status import choose_monster, damage, obtain_xp, update_xp_required
+from .store_journey import store_journey
 
-MAP_QUEST_URL = 'http://www.mapquestapi.com/directions/v2/route'
-MAP_QUEST_KEY = os.environ['MAP_QUEST_API_KEY']
+MAP_QUEST_URL = "http://www.mapquestapi.com/directions/v2/route"
+MAP_QUEST_KEY = os.environ["MAP_QUEST_API_KEY"]
 
 
-def get_monster_damage(dst, fuel, type, pollution):
+def get_monster_damage(type: JourneyType, pollution: Pollution) -> int:
     monster_damage = damage(1, pollution)
-
     if type == JourneyType.bus:
         monster_damage = int(monster_damage * 0.8)
     elif type == JourneyType.car:
         monster_damage = 0
-
     return monster_damage
 
 
-def get_user_damage(dst, fuel, type, pollution):
+def get_user_damage(fuel: float, type: JourneyType) -> int:
     user_damage = 0
     if type == JourneyType.bus:
         user_damage = int(fuel + 3)
@@ -35,7 +34,7 @@ def get_user_damage(dst, fuel, type, pollution):
     return user_damage
 
 
-async def update_user(user: User, monster_damage, user_damage):
+async def update_user(user: User, monster_damage: int, user_damage: int) -> int:
     stats, fight = user.stats, user.current_fight
     new_level = stats.lvl
     new_xp = stats.xp
@@ -45,7 +44,7 @@ async def update_user(user: User, monster_damage, user_damage):
         monsters = await get_all_monsters()
         monster = choose_monster(monsters, user.stats.lvl)
         new_xp = stats.xp + obtain_xp(await get_monster(monster_id=fight.monster_id))
-        while new_xp > new_xp_required:
+        while new_xp >= new_xp_required:
             new_xp -= new_xp_required
             new_level += 1
             stats.lvl = new_level
@@ -62,43 +61,48 @@ async def update_user(user: User, monster_damage, user_damage):
         new_xp_required = update_xp_required(stats)
         new_level = stats.lvl - 5 if stats.lvl - 5 > 1 else 1
 
-    await update_user_stats(
-        user_id=user.id,
-        hp=new_hp,
-        xp=new_xp,
-        level=new_level,
-        xp_required=new_xp_required)
+    await update_user_stats(user_id=user.id, hp=new_hp, xp=new_xp, level=new_level, xp_required=new_xp_required)
     return new_hp
 
 
-async def get_route(start: Coords, end: Coords) -> Tuple[float, float]:
+async def get_route(journey: RegisterJourney) -> Tuple[float, float]:
     async with aiohttp.ClientSession() as session:
-        parameters = {'key': MAP_QUEST_KEY, 'from': f'{start.lat},{start.lon}', 'to': f'{start.lat},{end.lon}'}
+        parameters = {
+            "key": MAP_QUEST_KEY,
+            "from": f"{journey.lat_start},{journey.lon_start}",
+            "to": f"{journey.lat_end},{journey.lon_end}",
+        }
         async with session.get(MAP_QUEST_URL, params=parameters) as response:
             try:
                 road = await response.json()
-                distance = road['route']['distance']
-                fuel = road['route']['fuelUsed']
+                distance = road["route"]["distance"]
+                fuel = road["route"]["fuelUsed"]
             except KeyError:
                 raise RouteNotFoundError
         return distance, fuel
 
 
 async def handle_journey_register(user_id: int, journey: RegisterJourney):
-    get_route_task = asyncio.create_task(get_route(journey.start, journey.end))
+    get_route_task = asyncio.create_task(get_route(journey))
     pollution = get_current_pollution()
     user = await get_user(user_id=user_id)
 
     await get_route_task
     distance, fuel = get_route_task.result()
 
-    monster_damage = get_monster_damage(distance, fuel, journey.type, pollution)
-    user_damage = get_user_damage(distance, fuel, journey.type, pollution)
+    monster_damage = get_monster_damage(journey.type, pollution)
+    user_damage = get_user_damage(fuel, journey.type)
 
     await update_user(user, monster_damage, user_damage)
 
     new_usr = await get_user(user_id=user_id)
-    params = {'user': new_usr,
-              'distance': distance,
-              'fuel_saved': fuel}
-    return JourneyUpdate(**params)
+    asyncio.create_task(
+        store_journey(
+            journey.type,
+            Coords(lat=journey.lat_start, lon=journey.lon_start),
+            Coords(lat=journey.lat_end, lon=journey.lon_end),
+            distance,
+            fuel,
+        )
+    )
+    return JourneyUpdate(user=new_usr, distance=distance, fuel_saved=fuel)

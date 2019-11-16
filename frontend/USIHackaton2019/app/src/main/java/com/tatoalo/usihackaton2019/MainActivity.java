@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -37,18 +38,19 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {//implements View.OnClickListener {
 
     EditText hp, xp;
+    TextView levelValue;
     ProgressBar hpValue, xpValue;
     ImageButton dataBike, dataBus;
-    ImageView playerImage;
+    ImageView playerImage, monsterImage;
     Spinner startData, stopData;
-    RequestQueue requestQueue;
+    static RequestQueue requestQueue;
     String hpValueString = "50", xpValueString = "50", maxValueXp = "";
     List<String> bikeAddresses = new ArrayList<>();
     List<String> busAddresses = new ArrayList<>();
     Button btnSaveData;
-
     EditText NO2, NO, O3, PM10;
     String dataTypeChoosen = "";
+    TextView hpMonsterValue, monsterLevelValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +69,9 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
 
         hpValue = (ProgressBar) findViewById(R.id.hpValue);
         xpValue = (ProgressBar) findViewById(R.id.xpValue);
+        levelValue = (TextView) findViewById(R.id.levelValue);
+        hpMonsterValue = (TextView) findViewById(R.id.hpMonsterValue);
+        monsterLevelValue = (TextView) findViewById(R.id.monsterLvlValue);
 
         hp.setFocusable(false);
         xp.setFocusable(false);
@@ -83,14 +88,12 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
         dataBus.setImageResource(R.drawable.bus);
 
         playerImage = (ImageView) findViewById(R.id.playerImg);
+        monsterImage = (ImageView) findViewById(R.id.monsterImage);
 
-        System.out.println("CIAO");
         //Init Values
         hpValue.setProgress(Integer.parseInt(hpValueString), true);
         xpValue.setProgress(Integer.parseInt(xpValueString), true);
 
-        //Spinner startData = findViewById(R.id.dataStart);
-        //Spinner stopData = findViewById(R.id.dataStop);
         String[] items = new String[]{"Test1", "Test2", "Test3"};
 
         final ArrayAdapter<String> bikeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, bikeAddresses);
@@ -104,8 +107,8 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
                 dataBus.setBackgroundDrawable(dataBike.getBackground());
                 dataBike.setBackgroundResource(R.drawable.btn_border);
 
-                Spinner startData = findViewById(R.id.dataStart);
-                Spinner stopData = findViewById(R.id.dataStop);
+                startData = findViewById(R.id.dataStart);
+                stopData = findViewById(R.id.dataStop);
 
                 startData.setAdapter(bikeAdapter);
                 stopData.setAdapter(bikeAdapter);
@@ -119,8 +122,8 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
                 dataTypeChoosen = "bus";
                 dataBike.setBackgroundDrawable(dataBus.getBackground());
                 dataBus.setBackgroundResource(R.drawable.btn_border);
-                Spinner startData = findViewById(R.id.dataStart);
-                Spinner stopData = findViewById(R.id.dataStop);
+                startData = findViewById(R.id.dataStart);
+                stopData = findViewById(R.id.dataStop);
 
                 startData.setAdapter(busAdapter);
                 stopData.setAdapter(busAdapter);
@@ -138,7 +141,7 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
         String urlBikes = "http://private-anon-5ec2e8c39d-hackaton4.apiary-mock.com/stations/bike";
         String urlBus = "https://private-anon-93fae61792-hackaton4.apiary-mock.com/stations/tpl";
         String urlPollution = "http://private-anon-5ec2e8c39d-hackaton4.apiary-mock.com/pollution";
-        final String urlSaveButton = "https://private-anon-5ec2e8c39d-hackaton4.apiary-mock.com/users/1";
+        String urlMonster = "https://private-anon-5ec2e8c39d-hackaton4.apiary-mock.com/monsters";
 
         // GET USERS
         StringRequest stringRequestUsers = new StringRequest(Request.Method.GET, urlUsers,
@@ -154,16 +157,43 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
                             hpValueString = (String) json2.get("hp");
                             xpValueString = (String) json2.get("xp");
                             maxValueXp = (String) json2.get("xp_required");
-
+                            levelValue.setText((String) json2.get("lvl"));
                             xpValue.setMax(Integer.parseInt(maxValueXp));
-
                             hpValue.setProgress(Integer.parseInt(hpValueString), true);
                             xpValue.setProgress(Integer.parseInt(xpValueString), true);
-
                             String urlImage = (String) json.get("icon");
+                            Picasso.get().load(urlImage).into(playerImage);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
-                            //Picasso.get().load(urlImage).into(playerImage);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
+                //print error in case of failed callback
+                System.out.println("Errore: " + error.toString() );
+            }
+        });
+
+        // GET MONSTERS
+        StringRequest stringRequestMonster = new StringRequest(Request.Method.GET, urlMonster,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            //JSONObject json= (JSONObject) new JSONTokener(response).nextValue();
+                            //JSONObject json2 = json.getJSONObject("id");
+                            JSONArray json = new JSONArray(response);
+
+
+                            hpMonsterValue.setText(json.getJSONObject(0).get("max_hp").toString());
+                            monsterLevelValue.setText(json.getJSONObject(0).get("lvl").toString());
+
+                            String urlImage = json.getJSONObject(0).get("icon").toString();
+                            Picasso.get().load(urlImage).into(monsterImage);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -186,31 +216,18 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
                     public void onResponse(String response) {
 
                         int count = 0;
-
-
                             try {
                                 JSONArray json = new JSONArray(response);
-                                //System.out.println(json.getJSONObject(count));
 
                                 while(count < json.length()){
                                     //System.out.println(json.getJSONObject(count).get("address"));
-                                    bikeAddresses.add(json.getJSONObject(count).get("address").toString());
+                                    bikeAddresses.add(json.getJSONObject(count).get("name").toString());
                                     count++;
-
                                 }
-
-                                /*ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, bikeAddresses);
-                                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                spinner2.setAdapter(dataAdapter);*/
-
-
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
-
-
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -238,20 +255,11 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
                                 //System.out.println(json.getJSONObject(count).get("address"));
                                 busAddresses.add(json.getJSONObject(count).get("name").toString());
                                 count++;
-
                             }
-
-                                /*ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, bikeAddresses);
-                                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                spinner2.setAdapter(dataAdapter);*/
-
-
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-
 
                     }
                 }, new Response.ErrorListener() {
@@ -273,20 +281,11 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
 
                         try {
                             JSONObject json= (JSONObject) new JSONTokener(response).nextValue();
-                            //System.out.println(json.getJSONObject(count));
-
-                            //JSONObject json2 = json.getJSONObject("NO2");
-                            //NO2 = (String) json.get("hp");
                             System.out.println("Pollution: " + json.get("NO2"));
-                            //busAddresses.add(json.getJSONObject(count).get("name").toString());
-                            //NO2.setT json.get("NO2");
                             NO2.setText(json.get("NO2").toString());
                             NO.setText(json.get("NO").toString());
                             O3.setText(json.get("O3").toString());
                             PM10.setText(json.get("PM10").toString());
-
-
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -304,40 +303,14 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
         });
 
         //POSTSaveButton
+
+
+
+
+        //
         btnSaveData.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-
-                // Instantiate the RequestQueue.
-                RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-                //this is the url where you want to send the request
-
-                // Request a string response from the provided URL.
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, urlSaveButton,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                // Display the response string.
-                                System.out.println("HERE_Response: " + response);
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        System.out.println("HERE_ERROR!");
-                    }
-                }) {
-                    //adding parameters to the request
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> params = new HashMap<>();
-                        params.put("type", dataTypeChoosen);
-                        //params.put("email", _email.getText().toString());
-
-                        return params;
-                    }
-                };
-                // Add the request to the RequestQueue.
-                queue.add(stringRequest);
-
+                getFigthResult();
             }
         });
 
@@ -346,11 +319,130 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
         queue.add(stringRequestUsers);
         queue.add(stringRequestBikes);
         queue.add(stringRequestPollution);
+        queue.add(stringRequestMonster);
 
 
 
     }
 
+    public String[] getInfo(String url){
+        RequestQueue queue = Volley.newRequestQueue(this);
+        final String[] info = new String[5];
 
+        System.out.print("ASDFGHJKL;SXCVBNFGHGFDFBNMJHGFGHJH"+url);
+        StringRequest stringRequestBikeDetails = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        int count = 0;
+                        try {
+                            //JSONArray json = new JSONArray(response);
+                            JSONObject json= (JSONObject) new JSONTokener(response).nextValue();
+                            info[0] = json.get("id").toString();
+                            info[1] = json.get("name").toString();
+                            try {
+                                info[2] = json.get("address").toString();
+                            }catch(Exception e){
+                                info[2] = "";
+                            }
+                            String temp = json.get("coords").toString();
+                            String[] parts = temp.split("\"");
+                            info[3] = parts[3];
+                            info[4] = parts[7];
+                            System.out.println(info[3]+ " HOLAAA " +info[4]);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                //print error in case of failed callback
+                System.out.println("Errore: " + error.toString() );
+            }
+        });
+        queue.add(stringRequestBikeDetails);
+        return info;
+    }
+
+    public void getFigthResult() {
+
+        final String urlSaveButton = "https://private-anon-5ec2e8c39d-hackaton4.apiary-mock.com/users/1";
+        RequestQueue queue = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonOblect = null;
+        try {
+            String URL = urlSaveButton;
+            JSONObject jsonBody = new JSONObject();
+
+            String urlStart = "";
+            String urlEnd = "";
+            switch(dataTypeChoosen){
+                case "bus":
+                    urlStart = "https://private-anon-93fae61792-hackaton4.apiary-mock.com/stations/tpl/" + startData.getSelectedItem().toString();
+                    urlEnd = "https://private-anon-93fae61792-hackaton4.apiary-mock.com/stations/tpl/" + stopData.getSelectedItem().toString();
+                    break;
+                case "bike":
+                    urlStart = "https://private-anon-93fae61792-hackaton4.apiary-mock.com/stations/bike/" + startData.getSelectedItem().toString();
+                    urlEnd = "https://private-anon-93fae61792-hackaton4.apiary-mock.com/stations/bike/" + stopData.getSelectedItem().toString();
+                    break;
+            }
+            String[] info_start = getInfo(urlStart);
+            String[] info_end = getInfo(urlEnd);
+
+            jsonBody.put("type", dataTypeChoosen);
+            jsonBody.put("lat_start", info_start[3]);
+            jsonBody.put("lon_start", info_start[4]);
+            jsonBody.put("lat_end", info_start[3]);
+            jsonBody.put("lat_end", info_start[4]);
+
+            jsonOblect = new JsonObjectRequest(Request.Method.PUT, URL, jsonBody, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    //String result = response.toString();
+                    //System.out.println(" Risposta post" + result);
+
+                    try {
+
+                        JSONObject json= (JSONObject) new JSONTokener(response.toString()).nextValue();
+
+                        JSONObject stats = (JSONObject) json.getJSONObject("user").get("stats");
+                        System.out.println("HERE: " + stats.get("xp").toString());
+
+                                /*".toString().split("\"");;
+                        for (int i = 0 ; i<stats.length; i++){
+                            System.out.println("i " + stats[i]);
+                        }*/
+                        hpValueString = (String) stats.get("hp");
+                        xpValueString = (String) stats.get("xp");
+                        maxValueXp = (String) stats.get("xp_required");
+                        xpValue.setMax(Integer.parseInt(maxValueXp));
+                        levelValue.setText((String) stats.get("lvl"));
+                        hpValue.setProgress(Integer.parseInt(hpValueString), true);
+                        xpValue.setProgress(Integer.parseInt(xpValueString), true);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    onBackPressed();
+                }
+            });
+            //VolleyApplication.getInstance().addToRequestQueue(jsonOblect);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        queue.add(jsonOblect);
+    }
 
 }
+
+
+

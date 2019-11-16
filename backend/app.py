@@ -1,13 +1,14 @@
+from asyncpgsa import pg
 from fastapi import FastAPI
 from starlette.requests import Request
-from starlette.responses import Response, PlainTextResponse
+from starlette.responses import PlainTextResponse, Response
 
-from aiohttp import ClientResponseError, ClientConnectionError
-from .exceptions import ObjectNotFound, RouteNotFoundError, DatabaseException
-from . import main
-from .settings import BACKEND_SETTINGS
-from asyncpgsa import pg
+from aiohttp import ClientConnectionError, ClientResponseError
 from migrations.mocked_data.insert_mock_data import insert_data
+
+from . import main
+from .exceptions import DatabaseException, ObjectNotFound, RouteNotFoundError
+from .settings import BACKEND_SETTINGS
 
 
 def create_app():

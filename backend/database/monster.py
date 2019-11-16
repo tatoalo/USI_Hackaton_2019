@@ -1,9 +1,9 @@
 from typing import List
 
-from .models import Monster
 from ..classes import Monster as IntegrationMonster
-from .connection import database_connection
 from . import core
+from .connection import database_connection
+from .models import Monster
 
 
 @database_connection

@@ -1,6 +1,7 @@
-from .core import search_index
-from ..classes import Pollution
 from datetime import datetime, timedelta
+
+from ..classes import Pollution
+from .core import search_index
 
 
 def get_current_pollution() -> Pollution:
