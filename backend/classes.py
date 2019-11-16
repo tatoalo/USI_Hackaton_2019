@@ -72,6 +72,7 @@ class User(BaseModel):
   """
   Class that returns the information of a user.
   """
+  id: int
   name: str
   icon: str
   stats: Stats
@@ -90,7 +91,5 @@ class RegisterJourney(BaseModel):
     end: Coords
 
 class JourneyUpdate(BaseModel):
-    distance: float
+    user: User
     fuel_saved: float
-    monster_hp: int
-    hp: int
