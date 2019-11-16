@@ -11,12 +11,18 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import com.loopj.android.http.*;
 
-import org.json.*;
-import com.loopj.android.http.*;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
-import cz.msebera.android.httpclient.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +34,7 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
     ImageButton dataBike, dataBus;
     ImageView playerImage;
     Spinner startData, stopData;
+    RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +73,38 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
         dataBike.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 dataBike.setBackgroundResource(R.drawable.btn_border);
+
             }
         });
 
-        //AsyncHttpClient myClient = new AsyncHttpClient();
+        requestQueue= Volley.newRequestQueue(this);
 
+        // ...
 
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url ="http://private-anon-93fae61792-hackaton4.apiary-mock.com/users/1";
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        //print result of the get in case success callback
+                        System.out.println(("Here" + response));
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                //print error in case of failed callback
+                System.out.println("Errore: " + error.toString() );
+            }
+        });
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
 
 
 
