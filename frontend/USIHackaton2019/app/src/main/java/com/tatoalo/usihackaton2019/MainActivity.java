@@ -1,6 +1,8 @@
 package com.tatoalo.usihackaton2019;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -9,10 +11,17 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import com.loopj.android.http.*;
+
+import org.json.*;
+import com.loopj.android.http.*;
+
+import cz.msebera.android.httpclient.Header;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {//implements View.OnClickListener {
 
     EditText hp, xp;
     ProgressBar hpValue, xpValue;
@@ -60,13 +69,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+        //AsyncHttpClient myClient = new AsyncHttpClient();
 
-    }
 
-    @Override
-    public void onClick(View v) {
 
 
 
     }
+
+
+
+
+
 }
