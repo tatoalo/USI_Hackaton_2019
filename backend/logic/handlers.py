@@ -1,22 +1,18 @@
-import json
+from typing import Tuple
 import os
 
 import aiohttp
-from aiohttp import ClientConnectionError
-from fastapi import HTTPException
+import asyncio
 
 from backend.database.user import get_user, update_user_stats, update_user_fight, create_new_user_fight
 from ..database.monster import get_all_monsters, get_monster
 from ..elastic.pollution import get_current_pollution
 from ..monster_status import damage, choose_monster, obtain_xp, update_xp_required
 from ..classes import RegisterJourney, JourneyUpdate, Coords, JourneyType, User
+from ..exceptions import RouteNotFoundError
 
 MAP_QUEST_URL = 'http://www.mapquestapi.com/directions/v2/route'
 MAP_QUEST_KEY = os.environ['MAP_QUEST_API_KEY']
-
-
-class RouteNotFoundError(BaseException):
-    pass
 
 
 def get_monster_damage(dst, fuel, type, pollution):
@@ -75,38 +71,34 @@ async def update_user(user: User, monster_damage, user_damage):
     return new_hp
 
 
-async def get_route(start: Coords, end: Coords):
+async def get_route(start: Coords, end: Coords) -> Tuple[float, float]:
     async with aiohttp.ClientSession() as session:
-        params = {'key': MAP_QUEST_KEY,
-                  'from': f'{start.lat},{start.lon}',
-                  'to': f'{start.lat},{end.lon}'}
-        try:
-            async with session.get(MAP_QUEST_URL, params=params) as resp:
-                road = json.loads(await resp.text())
-                dst = road['route']['distance']
+        parameters = {'key': MAP_QUEST_KEY, 'from': f'{start.lat},{start.lon}', 'to': f'{start.lat},{end.lon}'}
+        async with session.get(MAP_QUEST_URL, params=parameters) as response:
+            try:
+                road = await response.json()
+                distance = road['route']['distance']
                 fuel = road['route']['fuelUsed']
-        except KeyError:
-            raise RouteNotFoundError
-        return dst, fuel
+            except KeyError:
+                raise RouteNotFoundError
+        return distance, fuel
 
 
 async def handle_journey_register(user_id: int, journey: RegisterJourney):
-    try:
-        dst, fuel = await get_route(journey.start, journey.end)
-    except RouteNotFoundError:
-        raise HTTPException(404, 'Route not found')
-    except ClientConnectionError:
-        raise HTTPException(500, 'Mapquest API not responding')
-
+    get_route_task = asyncio.create_task(get_route(journey.start, journey.end))
     pollution = get_current_pollution()
     user = await get_user(user_id=user_id)
-    monster_damage = get_monster_damage(dst, fuel, journey.type, pollution)
-    user_damage = get_user_damage(dst, fuel, journey.type, pollution)
+
+    await get_route_task
+    distance, fuel = get_route_task.result()
+
+    monster_damage = get_monster_damage(distance, fuel, journey.type, pollution)
+    user_damage = get_user_damage(distance, fuel, journey.type, pollution)
 
     await update_user(user, monster_damage, user_damage)
 
     new_usr = await get_user(user_id=user_id)
     params = {'user': new_usr,
-              'distance': dst,
+              'distance': distance,
               'fuel_saved': fuel}
     return JourneyUpdate(**params)
