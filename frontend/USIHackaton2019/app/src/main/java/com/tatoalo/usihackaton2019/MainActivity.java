@@ -137,11 +137,11 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String urlUsers = "http://private-anon-93fae61792-hackaton4.apiary-mock.com/users/1";
-        String urlBikes = "http://private-anon-5ec2e8c39d-hackaton4.apiary-mock.com/stations/bike";
-        String urlBus = "https://private-anon-93fae61792-hackaton4.apiary-mock.com/stations/tpl";
-        String urlPollution = "http://private-anon-5ec2e8c39d-hackaton4.apiary-mock.com/pollution";
-        String urlMonster = "https://private-anon-5ec2e8c39d-hackaton4.apiary-mock.com/monsters";
+        String urlUsers = "http://10.0.2.2:5000/users/1";
+        String urlBikes = "http://10.0.2.2:5000/stations/bike";
+        String urlBus = "http://10.0.2.2:5000/stations/tpl";
+        String urlPollution = "http://10.0.2.2:5000/pollution";
+        String urlMonster = "http://10.0.2.2:5000/monsters";
 
         // GET USERS
         StringRequest stringRequestUsers = new StringRequest(Request.Method.GET, urlUsers,
@@ -154,10 +154,10 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
                         try {
                             JSONObject json= (JSONObject) new JSONTokener(response).nextValue();
                             JSONObject json2 = json.getJSONObject("stats");
-                            hpValueString = (String) json2.get("hp");
-                            xpValueString = (String) json2.get("xp");
-                            maxValueXp = (String) json2.get("xp_required");
-                            levelValue.setText((String) json2.get("lvl"));
+                            hpValueString = json2.get("hp").toString();
+                            xpValueString =  json2.get("xp").toString();
+                            maxValueXp =  json2.get("xp_required").toString();
+                            levelValue.setText(json2.get("lvl").toString());
                             xpValue.setMax(Integer.parseInt(maxValueXp));
                             hpValue.setProgress(Integer.parseInt(hpValueString), true);
                             xpValue.setProgress(Integer.parseInt(xpValueString), true);
@@ -349,7 +349,7 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
                             String[] parts = temp.split("\"");
                             info[3] = parts[3];
                             info[4] = parts[7];
-                            System.out.println(info[3]+ " HOLAAA " +info[4]);
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -369,7 +369,7 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
 
     public void getFigthResult() {
 
-        final String urlSaveButton = "https://private-anon-5ec2e8c39d-hackaton4.apiary-mock.com/users/1";
+        final String urlSaveButton = "http://10.0.2.2:5000/users/1";
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonOblect = null;
         try {
@@ -380,47 +380,50 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
             String urlEnd = "";
             switch(dataTypeChoosen){
                 case "bus":
-                    urlStart = "https://private-anon-93fae61792-hackaton4.apiary-mock.com/stations/tpl/" + startData.getSelectedItem().toString();
-                    urlEnd = "https://private-anon-93fae61792-hackaton4.apiary-mock.com/stations/tpl/" + stopData.getSelectedItem().toString();
+                    urlStart = "http://10.0.2.2:5000/stations/tpl/" + startData.getSelectedItem().toString();
+                    urlEnd = "http://10.0.2.2:5000/stations/tpl/" + stopData.getSelectedItem().toString();
                     break;
                 case "bike":
-                    urlStart = "https://private-anon-93fae61792-hackaton4.apiary-mock.com/stations/bike/" + startData.getSelectedItem().toString();
-                    urlEnd = "https://private-anon-93fae61792-hackaton4.apiary-mock.com/stations/bike/" + stopData.getSelectedItem().toString();
+                    urlStart = "http://10.0.2.2:5000/stations/bike/" + startData.getSelectedItem().toString();
+                    urlEnd = "http://10.0.2.2:5000/stations/bike/" + stopData.getSelectedItem().toString();
                     break;
             }
+
+
             String[] info_start = getInfo(urlStart);
             String[] info_end = getInfo(urlEnd);
 
+            //
+            //le coordinate soono tutto nulle
+            //quindi info start e info end provengono dal metodo getInfo
+            //
+            //
+
+            System.out.println("CIAOOOOO"+ info_start[3]+info_start[4]+info_end[3]+info_end[4]);
             jsonBody.put("type", dataTypeChoosen);
             jsonBody.put("lat_start", info_start[3]);
             jsonBody.put("lon_start", info_start[4]);
-            jsonBody.put("lat_end", info_start[3]);
-            jsonBody.put("lat_end", info_start[4]);
+            jsonBody.put("lat_end", info_end[3]);
+            jsonBody.put("lon_end", info_end[4]);
 
             jsonOblect = new JsonObjectRequest(Request.Method.PUT, URL, jsonBody, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    //String result = response.toString();
-                    //System.out.println(" Risposta post" + result);
 
                     try {
-
+                        System.out.println("ASDASDADADASDASD");
                         JSONObject json= (JSONObject) new JSONTokener(response.toString()).nextValue();
 
                         JSONObject stats = (JSONObject) json.getJSONObject("user").get("stats");
-                        System.out.println("HERE: " + stats.get("xp").toString());
+                        hpValueString = stats.get("hp").toString();
+                        xpValueString = stats.get("xp").toString();
+                        maxValueXp = stats.get("xp_required").toString();
 
-                                /*".toString().split("\"");;
-                        for (int i = 0 ; i<stats.length; i++){
-                            System.out.println("i " + stats[i]);
-                        }*/
-                        hpValueString = (String) stats.get("hp");
-                        xpValueString = (String) stats.get("xp");
-                        maxValueXp = (String) stats.get("xp_required");
-                        xpValue.setMax(Integer.parseInt(maxValueXp));
-                        levelValue.setText((String) stats.get("lvl"));
-                        hpValue.setProgress(Integer.parseInt(hpValueString), true);
-                        xpValue.setProgress(Integer.parseInt(xpValueString), true);
+                        xpValue.setMax(Integer.valueOf(maxValueXp));
+
+                        levelValue.setText(stats.get("lvl").toString());
+                        hpValue.setProgress(Integer.valueOf(hpValueString), true);
+                        xpValue.setProgress(Integer.valueOf(xpValueString), true);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -433,8 +436,6 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
                     onBackPressed();
                 }
             });
-            //VolleyApplication.getInstance().addToRequestQueue(jsonOblect);
-
 
         } catch (JSONException e) {
             e.printStackTrace();
