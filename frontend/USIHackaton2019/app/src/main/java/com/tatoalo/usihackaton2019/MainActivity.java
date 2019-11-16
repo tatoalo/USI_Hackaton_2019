@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
     List<String> bikeAddresses = new ArrayList<>();
     List<String> busAddresses = new ArrayList<>();
 
+    EditText NO2, NO, O3, PM10;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +50,11 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
         hp = (EditText) findViewById(R.id.hp);
         xp = (EditText) findViewById(R.id.xp);
 
+        NO2 = (EditText) findViewById(R.id.NO2Value);
+        NO = (EditText) findViewById(R.id.NOValue);
+        O3 = (EditText) findViewById(R.id.O3Value);
+        PM10 = (EditText) findViewById(R.id.PM10Value);
+
         hpValue = (ProgressBar) findViewById(R.id.hpValue);
         xpValue = (ProgressBar) findViewById(R.id.xpValue);
 
@@ -55,6 +62,10 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
         xp.setFocusable(false);
         hpValue.setFocusable(false);
         xpValue.setFocusable(false);
+        NO2.setFocusable(false);
+        NO.setFocusable(false);
+        O3.setFocusable(false);
+        PM10.setFocusable(false);
 
         dataBike = (ImageButton) findViewById(R.id.dataTypeBike);
         dataBike.setImageResource(R.drawable.bike);
@@ -115,6 +126,7 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
         String urlUsers = "http://private-anon-93fae61792-hackaton4.apiary-mock.com/users/1";
         String urlBikes = "http://private-anon-5ec2e8c39d-hackaton4.apiary-mock.com/stations/bike";
         String urlBus = "https://private-anon-93fae61792-hackaton4.apiary-mock.com/stations/tpl";
+        String urlPollution = "http://private-anon-5ec2e8c39d-hackaton4.apiary-mock.com/pollution";
 
         // GET USERS
         StringRequest stringRequestUsers = new StringRequest(Request.Method.GET, urlUsers,
@@ -238,10 +250,54 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
                 System.out.println("Errore: " + error.toString() );
             }
         });
+
+        //GETPollution
+        StringRequest stringRequestPollution = new StringRequest(Request.Method.GET, urlPollution,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        int count = 0;
+
+                        try {
+                            JSONObject json= (JSONObject) new JSONTokener(response).nextValue();
+                            //System.out.println(json.getJSONObject(count));
+
+                            //JSONObject json2 = json.getJSONObject("NO2");
+                            //NO2 = (String) json.get("hp");
+                            System.out.println("Pollution: " + json.get("NO2"));
+                            //busAddresses.add(json.getJSONObject(count).get("name").toString());
+                            //NO2.setT json.get("NO2");
+                            NO2.setText(json.get("NO2").toString());
+                            NO.setText(json.get("NO").toString());
+                            O3.setText(json.get("O3").toString());
+                            PM10.setText(json.get("PM10").toString());
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                //print error in case of failed callback
+                System.out.println("Errore: " + error.toString() );
+            }
+        });
+
+
+
         // Add the request to the RequestQueue.
         queue.add(stringRequestBus);
         queue.add(stringRequestUsers);
         queue.add(stringRequestBikes);
+        queue.add(stringRequestPollution);
 
 
     }
