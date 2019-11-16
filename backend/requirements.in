@@ -1,0 +1,7 @@
+alembic
+asyncpg
+asyncpgsa
+elasticsearch
+fastapi
+sqlalchemy
+uvicorn

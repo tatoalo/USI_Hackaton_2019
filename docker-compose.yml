@@ -1,0 +1,37 @@
+version: "3.0"
+
+services:
+
+  hackathon_database:
+    image: postgres
+    container_name: hackathon-database
+    ports:
+      - "5005:5432"
+    environment:
+      - POSTGRES_USER=hacker
+      - POSTGRES_PASSWORD=hackathon
+      - POSTGRES_DB=hackathon-db
+    networks:
+      - hackathon-network
+
+  backend_app:
+    build: .
+    container_name: hackathon-backend
+    ports:
+      - "5000:5000"
+    environment:
+      ELASTIC_HOST: https://e398fe25873c4600a6b9a56e8a2ea1bc.eu-central-1.aws.cloud.es.io:9243/
+      ELASTIC_USERNAME: elastic
+      ELASTIC_PASSWORD: K5tnyguz4YaxZSl0FnD24BAj
+      DATABASE_URL: postgres://hacker:hackathon@localhost:5005/hackathon-db
+    volumes:
+      - ./backend:/app
+    command: uvicorn main:app --host 0.0.0.0 --port 5000 --reload
+    networks:
+      - hackathon-network
+    depends_on:
+      - hackathon_database
+
+networks:
+  hackathon-network:
+    driver: bridge
