@@ -52,7 +52,7 @@ async def update_user_fight(connection, *, user_id: int, new_monster_hp: int) ->
 
 
 @database_connection
-async def create_new_user_file(connection, *, user_id: int, monster: Monster) -> CurrentFight:
+async def create_new_user_fight(connection, *, user_id: int, monster: Monster) -> CurrentFight:
     """Create a new fight for a user by updating their Fight record and setting monster's HP to its max value."""
     response = await core.update(
         connection, Fight, Fight.c.user_id == user_id, monster_id=monster.id, monster_hp=monster.max_hp

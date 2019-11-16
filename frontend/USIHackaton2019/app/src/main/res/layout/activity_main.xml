@@ -11,7 +11,7 @@
         android:layout_width="94dp"
         android:layout_height="51dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="150dp"
         android:adjustViewBounds="true"
         android:backgroundTint="#00FFFFFF"
@@ -26,7 +26,7 @@
         android:layout_width="94dp"
         android:layout_height="51dp"
         android:layout_marginStart="140dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="216dp"
         android:adjustViewBounds="true"
         android:backgroundTint="#00FFFFFF"
@@ -37,59 +37,18 @@
         app:layout_constraintTop_toBottomOf="@+id/xp"
         tools:srcCompat="@drawable/bike" />
 
-    <EditText
-        android:id="@+id/hp"
-        android:layout_width="39dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="144dp"
-        android:layout_marginLeft="144dp"
-        android:layout_marginTop="60dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="HP"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/xp"
-        android:layout_width="43dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="144dp"
-        android:layout_marginLeft="144dp"
-        android:layout_marginTop="44dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="XP"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hp" />
-
     <ImageView
         android:id="@+id/playerImg"
-        android:layout_width="118dp"
-        android:layout_height="146dp"
+        android:layout_width="85dp"
+        android:layout_height="99dp"
         android:layout_marginStart="7dp"
-        android:layout_marginLeft="7dp"
-        android:layout_marginTop="47dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="19dp"
-        android:layout_marginRight="19dp"
         app:layout_constraintEnd_toStartOf="@+id/hp"
+        app:layout_constraintHorizontal_bias="0.424"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/elon" />
-
-    <ProgressBar
-        android:id="@+id/hpValue"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="144dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="69dp"
-        android:layout_marginEnd="52dp"
-        android:layout_marginRight="52dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/hp"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
         android:id="@+id/xpValue"
@@ -97,18 +56,56 @@
         android:layout_width="144dp"
         android:layout_height="35dp"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="54dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="52dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/xp"
         app:layout_constraintTop_toBottomOf="@+id/hpValue" />
+
+    <EditText
+        android:id="@+id/xp"
+        android:layout_width="43dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="XP"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hp" />
+
+    <ProgressBar
+        android:id="@+id/hpValue"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="144dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="52dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/hp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/hp"
+        android:layout_width="39dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="HP"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/dataStart"
         android:layout_width="210dp"
         android:layout_height="38dp"
         android:layout_marginStart="106dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="75dp"
         android:background="@android:drawable/btn_dropdown"
         android:spinnerMode="dropdown"
@@ -116,6 +113,33 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dataTypeBus" />
+
+    <Spinner
+        android:id="@+id/dataStop"
+        android:layout_width="210dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="106dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="95dp"
+        android:background="@android:drawable/btn_dropdown"
+        android:spinnerMode="dropdown"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dataStart" />
+
+    <TextView
+        android:id="@+id/stopText"
+        android:layout_width="wrap_content"
+        android:layout_height="19dp"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="278dp"
+        android:text="Stop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dataStart" />
 
     <TextView
         android:id="@+id/startText"
@@ -128,32 +152,110 @@
         android:text="Start"
         app:layout_constraintBottom_toTopOf="@+id/dataStart"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dataTypeBike" />
+        app:layout_constraintTop_toBottomOf="@+id/dataTypeBike"
+        app:layout_constraintVertical_bias="0.933" />
+
+    <EditText
+        android:id="@+id/O3Value"
+        android:layout_width="131dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="83dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="147dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/O3Label"
+        app:layout_constraintTop_toBottomOf="@+id/NOValue" />
 
     <TextView
-        android:id="@+id/stopText"
+        android:id="@+id/O3Label"
         android:layout_width="wrap_content"
-        android:layout_height="19dp"
-        android:layout_marginStart="104dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="278dp"
-        android:text="Stop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dataStart" />
-
-    <Spinner
-        android:id="@+id/dataStop"
-        android:layout_width="210dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="106dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="64dp"
-        android:layout_marginEnd="95dp"
-        android:background="@android:drawable/btn_dropdown"
-        android:spinnerMode="dropdown"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="O3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dataStart" />
+        app:layout_constraintTop_toBottomOf="@+id/NOLabel" />
+
+    <TextView
+        android:id="@+id/no2Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="74dp"
+        android:text="NO2"
+        app:layout_constraintEnd_toStartOf="@+id/NO2Value"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pollutionLevelText" />
+
+    <EditText
+        android:id="@+id/NOValue"
+        android:layout_width="131dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="144dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NO2Value" />
+
+    <EditText
+        android:id="@+id/PM10Value"
+        android:layout_width="131dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="144dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/O3Value" />
+
+    <TextView
+        android:id="@+id/pm10Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="60dp"
+        android:text="PM10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/O3Label" />
+
+    <TextView
+        android:id="@+id/pollutionLevelText"
+        android:layout_width="126dp"
+        android:layout_height="18dp"
+        android:text="Pollution Level"
+        tools:layout_editor_absoluteX="18dp"
+        tools:layout_editor_absoluteY="369dp" />
+
+    <EditText
+        android:id="@+id/NO2Value"
+        android:layout_width="131dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="144dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pollutionLevelText" />
+
+    <TextView
+        android:id="@+id/NOLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="82dp"
+        android:text="NO"
+        app:layout_constraintEnd_toStartOf="@+id/NOValue"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/no2Label" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
