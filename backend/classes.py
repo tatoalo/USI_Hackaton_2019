@@ -11,8 +11,8 @@ Auxiliar classes.
 class Coords(BaseModel):
     """Class that returns the coordinates."""
 
-    lat: float
-    lon: float
+    lat: str
+    lon: str
 
 
 class Stats(BaseModel):
