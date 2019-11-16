@@ -12,6 +12,10 @@ def build_query(selectable, condition=None):
     return query
 
 
+async def get_one(connection, selectable, condition=None):
+    return await fetch_one(connection, query=build_query(selectable, condition))
+
+
 async def fetch_more(connection, selectable, condition=None):
     return await connection.fetch(build_query(selectable, condition=condition))
 
