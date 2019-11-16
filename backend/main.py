@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-import classes as c
+from . import classes as c
 
 app = FastAPI()
 
