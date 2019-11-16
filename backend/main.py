@@ -3,25 +3,72 @@ import classes as c
 
 app = FastAPI()
 
-bus16 = {"item_id":16,"ID":1,"address":"Pocomaco","price":20}
+@app.get("/monster/{id}")
+def monsters(id:int):
+    """
+    Get monster details
+    """
+    pass
 
+@app.get("/monster")
+def monsters():
+    """
+    Get all monsters
+    """
+    pass
 
+@app.get("/users/{id}")
+def users(id:int):
+    """
+    Get user details
+    """
+    pass
 
-@app.post("/items/")
-async def create_item(item: c.Bus):
-    return item
+@app.put("/users/")
+def travels(id:int):
+    """
+    Register travel of the user
+    """
+    pass
 
-a = create_item(bus16)
+@app.get("/users")
+def users(id:int):
+    """
+    Get all users
+    """
+    pass
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+@app.get("/pollution")
+def pollution():
+    """
+    Get pollution values
+    """
+    pass
 
+@app.get("/stations/bike/{id}")
+def bike_stations(id:int):
+    """
+    Get bike station detail
+    """
+    pass
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int):
-    return Buss(**data)
+@app.get("/stations/bike")
+def bike_stations_all():
+    """
+    Get all bike station detail
+    """
+    pass
 
-@app.put("/items/{item_id}")
-def update_item(item_id: int, item: c.Bus):
-    return {"item_name": item.name, "item_id": item_id}
+@app.get("/stations/tpl/{id}")
+def bus_stations(id:int):
+    """
+    Get bus station detail
+    """
+    pass
+
+@app.get("/stations/tpl")
+def bus_stations_all():
+    """
+    Get all bus station detail
+    """
+    pass
