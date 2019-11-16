@@ -1,15 +1,16 @@
 import asyncio
-from backend.classes import Monster, User
-from backend.database.monster import create_monster
+from backend.classes import Monster
+from backend.database.monster import create_monster, get_all_monsters
 from backend.database.user import create_user
 
 
 async def insert(users, monsters):
-    for m in monsters:
-        await create_monster(monster=m)
+    if not await get_all_monsters():
+        for m in monsters:
+            await create_monster(monster=m)
 
-    for u in users:
-        await create_user(user_name=u['name'], user_icon=u['icon'], monster=u['m'])
+        for u in users:
+            await create_user(user_name=u['name'], user_icon=u['icon'], monster=u['m'])
 
 
 if __name__ == '__main__':
