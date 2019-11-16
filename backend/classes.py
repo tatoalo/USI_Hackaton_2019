@@ -45,6 +45,7 @@ class Monster(BaseModel):
     Class that returns the information of a monster without state.
     """
     id: int
+    max_hp: int
     icon:str
     name:str
     lvl:int
@@ -68,9 +69,7 @@ class Users(BaseModel):
   current_fight: Current_fight
 
 class Pollution(BaseModel):
-   """
-   Class that returns the actual pollution.
-   """
+   """Class that returns the actual pollution."""
    NO2: float
    NO: float
    O3: float
