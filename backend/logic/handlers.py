@@ -45,7 +45,7 @@ async def update_user(user: User, monster_damage, user_damage):
         monsters = await get_all_monsters()
         monster = choose_monster(monsters, user.stats.lvl)
         new_xp = stats.xp + obtain_xp(await get_monster(monster_id=fight.monster_id))
-        while new_xp > new_xp_required:
+        while new_xp >= new_xp_required:
             new_xp -= new_xp_required
             new_level += 1
             stats.lvl = new_level
@@ -71,9 +71,10 @@ async def update_user(user: User, monster_damage, user_damage):
     return new_hp
 
 
-async def get_route(start: Coords, end: Coords) -> Tuple[float, float]:
+async def get_route(journey: RegisterJourney) -> Tuple[float, float]:
     async with aiohttp.ClientSession() as session:
-        parameters = {'key': MAP_QUEST_KEY, 'from': f'{start.lat},{start.lon}', 'to': f'{start.lat},{end.lon}'}
+        parameters = {'key': MAP_QUEST_KEY, 'from': f'{journey.lat_start},{journey.lon_start}',
+                      'to': f'{journey.lat_end},{journey.lon_end}'}
         async with session.get(MAP_QUEST_URL, params=parameters) as response:
             try:
                 road = await response.json()
@@ -85,7 +86,7 @@ async def get_route(start: Coords, end: Coords) -> Tuple[float, float]:
 
 
 async def handle_journey_register(user_id: int, journey: RegisterJourney):
-    get_route_task = asyncio.create_task(get_route(journey.start, journey.end))
+    get_route_task = asyncio.create_task(get_route(journey))
     pollution = get_current_pollution()
     user = await get_user(user_id=user_id)
 

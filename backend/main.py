@@ -31,7 +31,7 @@ async def travels(id: int, journey: c.RegisterJourney):
 
 
 @app_router.get("/users")
-def users(id: int):
+def users():
     raise NotImplementedError
     # return await get_all_users()
 
