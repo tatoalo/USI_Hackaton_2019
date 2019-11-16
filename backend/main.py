@@ -1,74 +1,61 @@
 from fastapi import FastAPI
+
+from .elastic.tpl import get_stop, get_all_stops
+from .elastic.publibike import get_station, get_all_stations
+from .elastic.pollution import get_current_pollution
+from .database.monster import get_all_monsters, get_monster
+from .database.user import get_user
+from .logic.handlers import handle_journey_register
 from . import classes as c
 
 app = FastAPI()
 
 @app.get("/monster/{id}")
-def monsters(id:int):
-    """
-    Get monster details
-    """
-    pass
+async def monsters(id: int):
+    return await get_monster(monster_id=id)
 
-@app.get("/monster")
-def monsters():
-    """
-    Get all monsters
-    """
-    pass
+
+@app.get("/monsters")
+async def monsters():
+    return await get_all_monsters()
+
 
 @app.get("/users/{id}")
-def users(id:int):
-    """
-    Get user details
-    """
-    pass
+async def users(id: int):
+    return await get_user(user_id=id, include_fight=True)
 
-@app.put("/users/")
-def travels(id:int):
-    """
-    Register travel of the user
-    """
-    pass
+
+@app.put("/users/{id}")
+async def travels(id: int, journey: c.RegisterJourney):
+    return await handle_journey_register(id, journey)
+
 
 @app.get("/users")
-def users(id:int):
-    """
-    Get all users
-    """
-    pass
+def users(id: int):
+    raise NotImplementedError
+    # return await get_all_users()
+
 
 @app.get("/pollution")
 def pollution():
-    """
-    Get pollution values
-    """
-    pass
+    return get_current_pollution()
 
-@app.get("/stations/bike/{id}")
-def bike_stations(id:int):
-    """
-    Get bike station detail
-    """
-    pass
+
+@app.get("/stations/bike/{name}")
+async def bike_stations(name: str):
+    return get_station(station_name=name)
+
 
 @app.get("/stations/bike")
-def bike_stations_all():
-    """
-    Get all bike station detail
-    """
-    pass
+async def bike_stations_all():
+    return get_all_stations()
 
-@app.get("/stations/tpl/{id}")
-def bus_stations(id:int):
-    """
-    Get bus station detail
-    """
-    pass
+
+@app.get("/stations/tpl/{name}")
+async def bus_stations(name: str):
+    return get_stop(name)
+
 
 @app.get("/stations/tpl")
 def bus_stations_all():
-    """
-    Get all bus station detail
-    """
-    pass
+    return get_all_stops()
