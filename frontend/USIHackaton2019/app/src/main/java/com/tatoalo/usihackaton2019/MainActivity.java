@@ -359,16 +359,23 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
             jsonOblect = new JsonObjectRequest(Request.Method.PUT, URL, jsonBody, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    String result = response.toString();
-                    System.out.println(" Risposta post" + result);
+                    //String result = response.toString();
+                    //System.out.println(" Risposta post" + result);
 
                     try {
 
-                        JSONObject json= (JSONObject) new JSONTokener(result).nextValue();
-                        JSONObject json2 = json.getJSONObject("stats");
-                        hpValueString = (String) json2.get("hp");
-                        xpValueString = (String) json2.get("xp");
-                        maxValueXp = (String) json2.get("xp_required");
+                        JSONObject json= (JSONObject) new JSONTokener(response.toString()).nextValue();
+
+                        JSONObject stats = (JSONObject) json.getJSONObject("user").get("stats");
+                        System.out.println("HERE: " + stats.get("xp").toString());
+
+                                /*".toString().split("\"");;
+                        for (int i = 0 ; i<stats.length; i++){
+                            System.out.println("i " + stats[i]);
+                        }*/
+                        hpValueString = (String) stats.get("hp");
+                        xpValueString = (String) stats.get("xp");
+                        maxValueXp = (String) stats.get("xp_required");
                         xpValue.setMax(Integer.parseInt(maxValueXp));
                         hpValue.setProgress(Integer.parseInt(hpValueString), true);
                         xpValue.setProgress(Integer.parseInt(xpValueString), true);
@@ -376,9 +383,6 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
-
-
 
                 }
             }, new Response.ErrorListener() {
