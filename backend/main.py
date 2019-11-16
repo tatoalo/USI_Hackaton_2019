@@ -22,7 +22,7 @@ async def monsters():
 
 @app.get("/users/{id}")
 async def users(id: int):
-    return await get_user(user_id=id, include_fight=True)
+    return await get_user(user_id=id)
 
 
 @app.put("/users/{id}")
