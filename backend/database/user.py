@@ -41,7 +41,7 @@ async def create_user(connection, *, user_name: str, user_icon: str, monster: Mo
 async def update_user_stats(connection, *, user_id: int, **attributes) -> Stats:
     """Update statistics of the user."""
     response = await core.update(connection, UserStatistics, UserStatistics.c.user_id == user_id, **attributes)
-    return Stats(**response[0])
+    return Stats(**response[0], lvl=response[0]['level'])
 
 
 @database_connection
