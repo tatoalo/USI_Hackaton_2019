@@ -14,4 +14,4 @@ async def get_all_monsters(connection) -> List[Record]:
 
 @database_connection
 async def create_monster(connection, *, monster: MonsterIntegrationClass) -> Record:
-    return await core.create(connection, Monster, name=monster.name, level=monster.lvl, icon=monster.icon)
+    return await core.create(connection, Monster, name=monster.name, level=monster.lvl, icon=monster.icon, maximum_hp=monster.max_hp)
