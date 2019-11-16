@@ -27,6 +27,7 @@ Monster = Table(
     Column("name", String(64), unique=True),
     Column("level", Integer, server_default="1"),
     Column("icon", String(256), nullable=True),
+    Column("maximum_hp", Integer, nullable=False),
 )
 
 Fight = Table(

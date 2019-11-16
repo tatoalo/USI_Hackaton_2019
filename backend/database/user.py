@@ -6,7 +6,6 @@ from . import core
 from .models import User, UserStatistics, Fight
 from .connection import database_connection
 from ..classes import Monster
-from ..utils import compute_monster_hp
 
 USER_STATISTICS_JOIN = join(User, UserStatistics, User.c.id == UserStatistics.c.user_id)
 USER_STATISTICS_FIGHT_JOIN = join(USER_STATISTICS_JOIN, Fight, User.c.id == Fight.c.user_id)
@@ -31,7 +30,7 @@ async def create_user(connection, *, user_name: str, user_icon: str, monster: Mo
         )
         user_fight = await connection.fetchrow(
             Fight.insert()
-            .values(user_id=user["id"], monster_id=monster.id, monster_hp=compute_monster_hp(monster.lvl))
+            .values(user_id=user["id"], monster_id=monster.id, monster_hp=monster.max_hp)
             .returning(literal_column("*"))
         )
     return {**user, **user_statistics, **user_fight}
@@ -39,11 +38,19 @@ async def create_user(connection, *, user_name: str, user_icon: str, monster: Mo
 
 @database_connection
 async def update_user_stats(connection, *, user_id: int, **attributes) -> List[Record]:
+    """Update statistics of the user."""
     return await core.update(connection, UserStatistics, UserStatistics.c.user_id == user_id, **attributes)
 
 
 @database_connection
-async def update_user_fight(connection, *, user_id: int, monster: Monster) -> List[Record]:
+async def update_user_fight(connection, *, user_id: int, new_monster_hp: int) -> List[Record]:
+    """Update the HP of the current monster."""
+    return await core.update(connection, Fight, Fight.c.user_id == user_id, monster_hp=new_monster_hp)
+
+
+@database_connection
+async def create_new_user_file(connection, *, user_id: int, monster: Monster) -> List[Record]:
+    """Create a new fight for a user by updating their Fight record and setting monster's HP to its max value."""
     return await core.update(
-        connection, Fight, Fight.c.user_id == user_id, monster_id=monster.id, monster_hp=compute_monster_hp(monster.lvl)
+        connection, Fight, Fight.c.user_id == user_id, monster_id=monster.id, monster_hp=monster.max_hp
     )

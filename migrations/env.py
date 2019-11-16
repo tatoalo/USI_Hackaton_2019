@@ -6,7 +6,7 @@ from sqlalchemy import pool
 from alembic import context
 
 from backend.database.models import metadata
-from backend.settings import BASE_SETTINGS
+from backend.settings import BACKEND_SETTINGS
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -22,7 +22,7 @@ target_metadata = metadata
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
-config.set_main_option("sqlalchemy.url", BASE_SETTINGS["database_url"])
+config.set_main_option("sqlalchemy.url", BACKEND_SETTINGS["database_url"])
 
 
 def run_migrations_offline():
