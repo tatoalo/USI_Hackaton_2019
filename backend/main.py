@@ -6,7 +6,7 @@ from .database.user import get_user
 from .elastic.pollution import get_current_pollution
 from .elastic.publibike import get_all_stations, get_station
 from .elastic.tpl import get_all_stops, get_stop
-from .logic.handlers import handle_journey_register
+from .logic.process_journey import handle_journey_register
 
 app_router = APIRouter()
 
@@ -34,7 +34,6 @@ async def travels(id: int, journey: c.RegisterJourney):
 @app_router.get("/users")
 def users():
     raise NotImplementedError
-    # return await get_all_users()
 
 
 @app_router.get("/pollution")

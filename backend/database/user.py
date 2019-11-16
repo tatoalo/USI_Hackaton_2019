@@ -35,7 +35,9 @@ async def create_user(connection, *, user_name: str, user_icon: str, monster: Mo
             .values(user_id=user["id"], monster_id=monster.id, monster_hp=monster.max_hp)
             .returning(literal_column("*"))
         )
-    return IntegrationUser(**user, stats=Stats(**user_statistics), current_fight=CurrentFight(**user_fight))
+    return IntegrationUser(
+        **user, stats=Stats(**user_statistics, lvl=user_statistics["level"]), current_fight=CurrentFight(**user_fight)
+    )
 
 
 @database_connection

@@ -1,4 +1,5 @@
 from typing import Any, Dict, List
+import json
 
 from elasticsearch import Elasticsearch
 
@@ -14,3 +15,7 @@ def search_index(index_name: str, search_definition: Dict[str, Any] = None) -> L
     response = es_connection.search(index=[index_name], body=search_definition)
     for record in response["hits"]["hits"]:
         yield record["_id"], record["_source"]
+
+
+def insert_data(index_name: str, id: float, attributes: json) -> None:
+    es_connection.create(index=index_name, id=int(id), body=attributes)
