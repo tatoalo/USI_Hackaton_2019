@@ -3,7 +3,9 @@ import asyncpgsa
 
 from ..settings import BASE_SETTINGS
 
-POOL = asyncpgsa.create_pool(dns=BASE_SETTINGS["database_url"], min_size=1, max_size=5)
+
+async def create_database_pool():
+    return await asyncpgsa.create_pool(dsn=BASE_SETTINGS["database_url"], min_size=1, max_size=5)
 
 
 def database_connection(func):
@@ -11,7 +13,8 @@ def database_connection(func):
     async def inner(connection=None, **kwargs):
         if connection is not None:
             return await func(connection=connection, **kwargs)
-        async with POOL.acquire() as conn:
+        pool = await create_database_pool()
+        async with pool.acquire() as conn:
             return await func(connection=conn, **kwargs)
 
     return inner
