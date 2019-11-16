@@ -267,4 +267,12 @@
         app:layout_constraintEnd_toStartOf="@+id/NOValue"
         app:layout_constraintStart_toEndOf="@+id/NO2Value" />
 
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        tools:layout_editor_absoluteX="284dp"
+        tools:layout_editor_absoluteY="387dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

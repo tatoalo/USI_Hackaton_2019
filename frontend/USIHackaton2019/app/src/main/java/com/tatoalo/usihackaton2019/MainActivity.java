@@ -1,6 +1,7 @@
 package com.tatoalo.usihackaton2019;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -10,11 +11,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
@@ -24,7 +28,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -39,13 +45,17 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
     String hpValueString = "50", xpValueString = "50", maxValueXp = "";
     List<String> bikeAddresses = new ArrayList<>();
     List<String> busAddresses = new ArrayList<>();
+    Button btnSaveData;
 
     EditText NO2, NO, O3, PM10;
+    String dataTypeChoosen = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        btnSaveData = (Button) findViewById(R.id.btnSave);
 
         hp = (EditText) findViewById(R.id.hp);
         xp = (EditText) findViewById(R.id.xp);
@@ -90,6 +100,7 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
 
         dataBike.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
+                dataTypeChoosen = "bike";
                 dataBus.setBackgroundDrawable(dataBike.getBackground());
                 dataBike.setBackgroundResource(R.drawable.btn_border);
 
@@ -105,7 +116,7 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
 
         dataBus.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-
+                dataTypeChoosen = "bus";
                 dataBike.setBackgroundDrawable(dataBus.getBackground());
                 dataBus.setBackgroundResource(R.drawable.btn_border);
                 Spinner startData = findViewById(R.id.dataStart);
@@ -127,6 +138,7 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
         String urlBikes = "http://private-anon-5ec2e8c39d-hackaton4.apiary-mock.com/stations/bike";
         String urlBus = "https://private-anon-93fae61792-hackaton4.apiary-mock.com/stations/tpl";
         String urlPollution = "http://private-anon-5ec2e8c39d-hackaton4.apiary-mock.com/pollution";
+        final String urlSaveButton = "https://private-anon-5ec2e8c39d-hackaton4.apiary-mock.com/users/1";
 
         // GET USERS
         StringRequest stringRequestUsers = new StringRequest(Request.Method.GET, urlUsers,
@@ -291,13 +303,50 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
             }
         });
 
+        //POSTSaveButton
+        btnSaveData.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
 
+                // Instantiate the RequestQueue.
+                RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+                //this is the url where you want to send the request
+
+                // Request a string response from the provided URL.
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, urlSaveButton,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                // Display the response string.
+                                System.out.println("HERE_Response: " + response);
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("HERE_ERROR!");
+                    }
+                }) {
+                    //adding parameters to the request
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put("type", dataTypeChoosen);
+                        //params.put("email", _email.getText().toString());
+
+                        return params;
+                    }
+                };
+                // Add the request to the RequestQueue.
+                queue.add(stringRequest);
+
+            }
+        });
 
         // Add the request to the RequestQueue.
         queue.add(stringRequestBus);
         queue.add(stringRequestUsers);
         queue.add(stringRequestBikes);
         queue.add(stringRequestPollution);
+
 
 
     }
