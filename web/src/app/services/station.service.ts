@@ -1,27 +1,32 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { environment } from "../../environments/environment";
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import {BikeStation} from '../models/BikeStation';
+import {TplStation} from '../models/TplStation';
 
 
-@Injectable
+@Injectable({
+  providedIn: 'root'
+})
 export class StationService {
-    url = environment.api_url + "/stations"
-    
-    constructor(private http: HttpClient) { }
+  url = environment.api_url + '/stations';
 
-    public get_all_bike_stations() {
-        return this.http.get(this.url + "/bike")
-    }
+  constructor(private http: HttpClient) {
+  }
 
-    public get_one_bike_station(name: string) {
-        return this.http.get(this.url + "/bike/" + name)
-    }
+  public getAllBikeStations() {
+    return this.http.get<BikeStation[]>(this.url + '/bike');
+  }
 
-    public get_all_tpl_stations() {
-        return this.http.get(this.url + "/tpl")
-    }
+  public getBikeStation(name: string) {
+    return this.http.get<BikeStation>(this.url + '/bike/' + name);
+  }
 
-    public get_one_tpl_station(name: string) {
-        return this.http.get(this.url + "/tpl/" + name)
-    }
+  public getAllTPLStations() {
+    return this.http.get<TplStation[]>(this.url + '/tpl');
+  }
+
+  public getTPLStation(name: string) {
+    return this.http.get<TplStation>(this.url + '/tpl/' + name);
+  }
 }

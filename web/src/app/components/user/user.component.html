@@ -1,0 +1,9 @@
+<div style="height: 250px">
+  <img *ngIf="user" class="user-icon" src="{{user.icon}}"/>
+  <div *ngIf="user">{{user.name}}</div>
+  <div *ngIf="user">{{user.stats.xp}} out of {{user.stats.xp_required}} XP</div>
+  <mat-progress-bar style="width:200px" *ngIf="user" mode="determinate" [value]="user.stats.hp"></mat-progress-bar>
+  <mat-progress-bar style="width:200px" *ngIf="user" mode="determinate"
+                    [value]="user.stats.xp * (1/user.stats.xp_required)"></mat-progress-bar>
+</div>
+<mat-divider vertical="{{false}}"></mat-divider>

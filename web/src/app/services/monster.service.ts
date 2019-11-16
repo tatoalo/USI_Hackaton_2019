@@ -1,19 +1,23 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { environment } from "../../environments/environment";
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import {Monster} from '../models/Monster';
 
 
-@Injectable
+@Injectable({
+  providedIn: 'root'
+})
 export class MonsterService {
-    url = environment.api_url + "/monsters"
-    
-    constructor(private http: HttpClient) { }
+  url = environment.api_url + '/monsters';
 
-    public get_all() {
-        return this.http.get(this.url)
-    }
+  constructor(private http: HttpClient) {
+  }
 
-    public get_one(id: number) {
-        return this.http.get(this.url + "/" + id)
-    }
+  public getAll() {
+    return this.http.get<Monster[]>(this.url);
+  }
+
+  public getMonster(id: number) {
+    return this.http.get<Monster>(this.url + '/' + id);
+  }
 }

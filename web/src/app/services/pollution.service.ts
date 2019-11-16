@@ -1,15 +1,19 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { environment } from "../../environments/environment";
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import {Pollution} from '../models/Pollution';
 
 
-@Injectable
+@Injectable({
+  providedIn: 'root'
+})
 export class PollutionService {
-    url = environment.api_url + "/pollution"
-    
-    constructor(private http: HttpClient) { }
+  url = environment.api_url + '/pollution';
 
-    public get() {
-        return this.http.get(this.url)
-    }
+  constructor(private http: HttpClient) {
+  }
+
+  public getCurrentPollution() {
+    return this.http.get<Pollution>(this.url);
+  }
 }
