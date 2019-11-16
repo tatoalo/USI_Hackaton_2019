@@ -1,6 +1,9 @@
+aiodns
+aiohttp
 alembic
 asyncpg
 asyncpgsa
+cchardet
 elasticsearch
 fastapi
 sqlalchemy
