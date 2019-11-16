@@ -3,16 +3,13 @@ import os
 from typing import Tuple
 
 import aiohttp
-from backend.database.user import (create_new_user_fight, get_user,
-                                   update_user_fight, update_user_stats)
+from backend.database.user import create_new_user_fight, get_user, update_user_fight, update_user_stats
 
-from ..classes import (Coords, JourneyType, JourneyUpdate, Pollution,
-                       RegisterJourney, User)
+from ..classes import Coords, JourneyType, JourneyUpdate, Pollution, RegisterJourney, User
 from ..database.monster import get_all_monsters, get_monster
 from ..elastic.pollution import get_current_pollution
 from ..exceptions import RouteNotFoundError
-from ..monster_status import (choose_monster, damage, obtain_xp,
-                              update_xp_required)
+from ..monster_status import choose_monster, damage, obtain_xp, update_xp_required
 from .store_journey import store_journey
 
 MAP_QUEST_URL = "http://www.mapquestapi.com/directions/v2/route"
