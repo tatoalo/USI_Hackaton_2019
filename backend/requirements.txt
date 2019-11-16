@@ -23,9 +23,10 @@ idna==2.8                 # via yarl
 mako==1.1.0               # via alembic
 markupsafe==1.1.1         # via mako
 multidict==4.5.2          # via aiohttp, yarl
+numpy==1.17.4
+psycopg2-binary==2.8.4
 pycares==3.0.0            # via aiodns
 pycparser==2.19           # via cffi
-psycopg2-binary==2.8.4
 pydantic==0.32.2          # via fastapi
 python-dateutil==2.8.1    # via alembic
 python-editor==1.0.4      # via alembic
