@@ -1,5 +1,7 @@
 package com.tatoalo.usihackaton2019;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,12 +21,21 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -36,6 +47,8 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
     ImageView playerImage;
     Spinner startData, stopData;
     RequestQueue requestQueue;
+    String hpValueString = "50", xpValueString = "50", maxValueXp = "";
+    ArrayList<String> bikeAddresses = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +72,10 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
 
         playerImage = (ImageView) findViewById(R.id.playerImg);
 
+        System.out.println("CIAO");
         //Init Values
-        hpValue.setProgress(55, true);
-        xpValue.setProgress(65, true);
+        hpValue.setProgress(Integer.parseInt(hpValueString), true);
+        xpValue.setProgress(Integer.parseInt(xpValueString), true);
 
         Spinner startData = findViewById(R.id.dataStart);
         Spinner stopData = findViewById(R.id.dataStop);
@@ -80,26 +94,35 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
 
         requestQueue= Volley.newRequestQueue(this);
 
-        // ...
-
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://private-anon-93fae61792-hackaton4.apiary-mock.com/users/1";
+        String urlUsers = "http://private-anon-93fae61792-hackaton4.apiary-mock.com/users/1";
+        String urlBikes = "http://private-anon-5ec2e8c39d-hackaton4.apiary-mock.com/stations/bike";
 
-        // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+        // GET USERS
+        StringRequest stringRequestUsers = new StringRequest(Request.Method.GET, urlUsers,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
 
-                        //print result of the get in case success callback
-                        System.out.println(("Here" + response));
+                        //System.out.println(("Here" + response));
 
                         try {
                             JSONObject json= (JSONObject) new JSONTokener(response).nextValue();
-                            //JSONObject json2 = json.getJSONObject("name");
-                            String test = (String) json.get("name");
-                            System.out.println(test);
+                            JSONObject json2 = json.getJSONObject("stats");
+                            hpValueString = (String) json2.get("hp");
+                            xpValueString = (String) json2.get("xp");
+                            maxValueXp = (String) json2.get("xp_required");
+
+                            xpValue.setMax(Integer.parseInt(maxValueXp));
+
+                            hpValue.setProgress(Integer.parseInt(hpValueString), true);
+                            xpValue.setProgress(Integer.parseInt(xpValueString), true);
+
+                            String urlImage = (String) json.get("icon");
+
+                            //Picasso.get().load(urlImage).into(playerImage);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -114,14 +137,43 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
             }
         });
 
-        // Add the request to the RequestQueue.
-        queue.add(stringRequest);
 
+        //GET BIKES
+        StringRequest stringRequestBikes = new StringRequest(Request.Method.GET, urlBikes,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        int count = 0;
+
+
+                            try {
+                                JSONArray json = new JSONArray(response);
+                                //System.out.println(json.getJSONObject(count));
+                                System.out.println(json.length());
+                                count++;
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                //print error in case of failed callback
+                System.out.println("Errore: " + error.toString() );
+            }
+        });
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequestUsers);
+        queue.add(stringRequestBikes);
 
 
     }
-
-
 
 
 

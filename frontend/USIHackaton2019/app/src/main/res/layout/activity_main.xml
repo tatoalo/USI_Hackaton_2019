@@ -97,10 +97,8 @@
         android:layout_width="144dp"
         android:layout_height="35dp"
         android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
         android:layout_marginTop="54dp"
         android:layout_marginEnd="52dp"
-        android:layout_marginRight="52dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/xp"
         app:layout_constraintTop_toBottomOf="@+id/hpValue" />
