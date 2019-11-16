@@ -1,7 +1,8 @@
-from ..elastic.core import insert_data
-from ..classes import Coords, JourneyType
-from datetime import datetime
 import json
+from datetime import datetime
+
+from ..classes import Coords, JourneyType
+from ..elastic.core import insert_data
 
 
 async def store_journey(type: JourneyType, start_coords: Coords, end_coords: Coords, distance: float, fuel: float):

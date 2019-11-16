@@ -5,7 +5,7 @@ from typing import Tuple
 import aiohttp
 from backend.database.user import create_new_user_fight, get_user, update_user_fight, update_user_stats
 
-from ..classes import Coords, JourneyType, JourneyUpdate, RegisterJourney, User
+from ..classes import Coords, JourneyType, JourneyUpdate, Pollution, RegisterJourney, User
 from ..database.monster import get_all_monsters, get_monster
 from ..elastic.pollution import get_current_pollution
 from ..exceptions import RouteNotFoundError
@@ -16,18 +16,16 @@ MAP_QUEST_URL = "http://www.mapquestapi.com/directions/v2/route"
 MAP_QUEST_KEY = os.environ["MAP_QUEST_API_KEY"]
 
 
-def get_monster_damage(dst, fuel, type, pollution):
+def get_monster_damage(type: JourneyType, pollution: Pollution) -> int:
     monster_damage = damage(1, pollution)
-
     if type == JourneyType.bus:
         monster_damage = int(monster_damage * 0.8)
     elif type == JourneyType.car:
         monster_damage = 0
-
     return monster_damage
 
 
-def get_user_damage(dst, fuel, type, pollution):
+def get_user_damage(fuel: float, type: JourneyType) -> int:
     user_damage = 0
     if type == JourneyType.bus:
         user_damage = int(fuel + 3)
@@ -36,7 +34,7 @@ def get_user_damage(dst, fuel, type, pollution):
     return user_damage
 
 
-async def update_user(user: User, monster_damage, user_damage):
+async def update_user(user: User, monster_damage: int, user_damage: int) -> int:
     stats, fight = user.stats, user.current_fight
     new_level = stats.lvl
     new_xp = stats.xp
@@ -92,8 +90,8 @@ async def handle_journey_register(user_id: int, journey: RegisterJourney):
     await get_route_task
     distance, fuel = get_route_task.result()
 
-    monster_damage = get_monster_damage(distance, fuel, journey.type, pollution)
-    user_damage = get_user_damage(distance, fuel, journey.type, pollution)
+    monster_damage = get_monster_damage(journey.type, pollution)
+    user_damage = get_user_damage(fuel, journey.type)
 
     await update_user(user, monster_damage, user_damage)
 
@@ -107,5 +105,4 @@ async def handle_journey_register(user_id: int, journey: RegisterJourney):
             fuel,
         )
     )
-    params = {"user": new_usr, "distance": distance, "fuel_saved": fuel}
-    return JourneyUpdate(**params)
+    return JourneyUpdate(user=new_usr, distance=distance, fuel_saved=fuel)
