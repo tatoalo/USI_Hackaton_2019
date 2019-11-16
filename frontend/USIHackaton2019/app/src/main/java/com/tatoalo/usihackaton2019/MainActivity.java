@@ -340,6 +340,7 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
                             JSONObject json= (JSONObject) new JSONTokener(response).nextValue();
                             info[0] = json.get("id").toString();
                             info[1] = json.get("name").toString();
+
                             try {
                                 info[2] = json.get("address").toString();
                             }catch(Exception e){
@@ -347,6 +348,7 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
                             }
                             String temp = json.get("coords").toString();
                             String[] parts = temp.split("\"");
+
                             info[3] = parts[3];
                             info[4] = parts[7];
 
@@ -364,6 +366,7 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
             }
         });
         queue.add(stringRequestBikeDetails);
+
         return info;
     }
 
@@ -399,6 +402,12 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
             //
             //
 
+            info_start[3] = "45.953905";
+            info_start[4] = "8.949715";
+            info_end[3] = "45.9242";
+            info_end[4] = "8.9192";
+
+
             System.out.println("CIAOOOOO"+ info_start[3]+info_start[4]+info_end[3]+info_end[4]);
             jsonBody.put("type", dataTypeChoosen);
             jsonBody.put("lat_start", info_start[3]);
@@ -414,7 +423,11 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
                         System.out.println("ASDASDADADASDASD");
                         JSONObject json= (JSONObject) new JSONTokener(response.toString()).nextValue();
 
+                        System.out.println("RESPONSE: " + response);
+
                         JSONObject stats = (JSONObject) json.getJSONObject("user").get("stats");
+                        JSONObject currentFight = (JSONObject) json.getJSONObject("user").get("current_fight");
+                        JSONObject monster = (JSONObject) json.getJSONObject("monster");
                         hpValueString = stats.get("hp").toString();
                         xpValueString = stats.get("xp").toString();
                         maxValueXp = stats.get("xp_required").toString();
@@ -424,6 +437,13 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
                         levelValue.setText(stats.get("lvl").toString());
                         hpValue.setProgress(Integer.valueOf(hpValueString), true);
                         xpValue.setProgress(Integer.valueOf(xpValueString), true);
+                        hpMonsterValue.setText(currentFight.get("monster_hp").toString());
+
+                        monsterLevelValue.setText(monster.get("lvl").toString());
+
+                        String urlImage = monster.get("icon").toString();
+                        Picasso.get().load(urlImage).into(monsterImage);
+
 
                     } catch (JSONException e) {
                         e.printStackTrace();
