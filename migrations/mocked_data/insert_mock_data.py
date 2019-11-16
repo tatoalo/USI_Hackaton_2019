@@ -27,6 +27,6 @@ async def insert_data():
     ]
 
     users = [
-        {'name': 'Psyduck', 'icon': 'https://image.flaticon.com/icons/svg/189/189000.svg', 'm': monsters[2]}
+        {'name': 'Psyduck', 'icon': 'https://drive.google.com/uc?id=18Hz6uyLsnGTnUmezXtA5bGqbVYBvJJRf', 'm': monsters[2]}
     ]
     await insert(users, monsters)
