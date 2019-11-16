@@ -159,103 +159,112 @@
 
     <EditText
         android:id="@+id/O3Value"
-        android:layout_width="131dp"
-        android:layout_height="33dp"
-        android:layout_marginStart="83dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="147dp"
+        android:layout_width="53dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginBottom="16dp"
         android:ems="10"
         android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/O3Label"
-        app:layout_constraintTop_toBottomOf="@+id/NOValue" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/O3Label" />
 
     <TextView
         android:id="@+id/O3Label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="64dp"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="21dp"
         android:text="O3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NOLabel" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/O3Value"
+        app:layout_constraintStart_toEndOf="@+id/NOValue" />
 
     <TextView
         android:id="@+id/no2Label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="74dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="28dp"
         android:text="NO2"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/NO2Value"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pollutionLevelText" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/NOValue"
-        android:layout_width="131dp"
-        android:layout_height="33dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="144dp"
+        android:layout_width="51dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginBottom="20dp"
         android:ems="10"
         android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NO2Value" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/O3Label"
+        app:layout_constraintStart_toEndOf="@+id/NOLabel" />
 
     <EditText
         android:id="@+id/PM10Value"
-        android:layout_width="131dp"
-        android:layout_height="33dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="144dp"
+        android:layout_width="54dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="33dp"
+        android:layout_marginBottom="5dp"
         android:ems="10"
         android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/O3Value" />
+        app:layout_constraintStart_toEndOf="@+id/O3Value" />
 
     <TextView
         android:id="@+id/pm10Label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginStart="103dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginBottom="9dp"
         android:text="PM10"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/O3Label" />
+        app:layout_constraintBottom_toTopOf="@+id/PM10Value"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/NOValue" />
 
     <TextView
         android:id="@+id/pollutionLevelText"
         android:layout_width="126dp"
         android:layout_height="18dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="277dp"
+        android:layout_marginBottom="25dp"
         android:text="Pollution Level"
-        tools:layout_editor_absoluteX="18dp"
-        tools:layout_editor_absoluteY="369dp" />
+        app:layout_constraintBottom_toTopOf="@+id/NO2Value"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/NO2Value"
-        android:layout_width="131dp"
-        android:layout_height="33dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="144dp"
+        android:layout_width="61dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
         android:ems="10"
         android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pollutionLevelText" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/NOLabel"
+        app:layout_constraintStart_toEndOf="@+id/no2Label" />
 
     <TextView
         android:id="@+id/NOLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="82dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="7dp"
+        android:layout_marginBottom="28dp"
         android:text="NO"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/NOValue"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/no2Label" />
+        app:layout_constraintStart_toEndOf="@+id/NO2Value" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
