@@ -71,3 +71,17 @@ def choose_monster(list_monsters,level):
         level_list.append(i.lvl)
     level_list = gaussian(np.array(level_list),level,desviation)
     return random.choices(list_monsters,level_list)
+
+def update_xp_required(stat):
+    """
+    Update the xp required for player
+    """
+    xp_required = (2 ** (stat.lvl+1)) * 10
+    return xp_required
+
+def obtain_xp(monster):
+    """
+    Obtain the xp for the slayer monster
+    """
+    xp_win = int(0.5*(monster.lvl**2) * 10)
+    return xp_win
