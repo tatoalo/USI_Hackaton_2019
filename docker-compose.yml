@@ -15,11 +15,12 @@ services:
       - hackathon-network
 
   backend_app:
-    build: .
+    image: backend:latest
     container_name: hackathon-backend
     ports:
       - "5000:5000"
     environment:
+      MAP_QUEST_API_KEY: zVs80djptAXAlwAEGRKAZsi3rjDqyWBW
       ELASTIC_HOST: https://e398fe25873c4600a6b9a56e8a2ea1bc.eu-central-1.aws.cloud.es.io:9243/
       ELASTIC_USERNAME: elastic
       ELASTIC_PASSWORD: K5tnyguz4YaxZSl0FnD24BAj
