@@ -2,7 +2,7 @@ from typing import List
 from asyncpg import Record
 from sqlalchemy import select, literal_column
 
-from .exceptions import ObjectNotFound
+from ..exceptions import ObjectNotFound
 
 
 def build_query(selectable, condition=None):

@@ -1,4 +1,3 @@
-import asyncio
 from backend.classes import Monster
 from backend.database.monster import create_monster, get_all_monsters
 from backend.database.user import create_user
@@ -13,7 +12,7 @@ async def insert(users, monsters):
             await create_user(user_name=u['name'], user_icon=u['icon'], monster=u['m'])
 
 
-if __name__ == '__main__':
+async def insert_data():
     monsters = [
         Monster(id=1, lvl=2, max_hp=150, icon="https://drive.google.com/uc?id=117Jvzb6PTym84CiF8qi_0Q6NYth19GqO", name="M1"),
         Monster(id=2, lvl=1, max_hp=100, icon="https://drive.google.com/uc?id=1SBGkcKdlUqjg40B_TNqUV7F3BtnhHQSD", name="M2"),
@@ -30,4 +29,4 @@ if __name__ == '__main__':
     users = [
         {'name': 'Psyduck', 'icon': 'https://image.flaticon.com/icons/svg/189/189000.svg', 'm': monsters[2]}
     ]
-    asyncio.run(insert(users, monsters))
+    await insert(users, monsters)
