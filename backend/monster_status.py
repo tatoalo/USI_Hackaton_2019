@@ -70,7 +70,7 @@ def choose_monster(list_monsters,level):
     for i in list_monsters:
         level_list.append(i.lvl)
     level_list = gaussian(np.array(level_list),level,desviation)
-    return random.choices(list_monsters,level_list)
+    return random.choices(list_monsters,level_list)[0]
 
 def update_xp_required(stat):
     """
