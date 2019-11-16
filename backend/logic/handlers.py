@@ -1,18 +1,20 @@
-from typing import Tuple
+import asyncio
 import os
+from typing import Tuple
 
 import aiohttp
-import asyncio
+from backend.database.user import (create_new_user_fight, get_user,
+                                   update_user_fight, update_user_stats)
 
-from backend.database.user import get_user, update_user_stats, update_user_fight, create_new_user_fight
+from ..classes import JourneyType, JourneyUpdate, RegisterJourney, User
 from ..database.monster import get_all_monsters, get_monster
 from ..elastic.pollution import get_current_pollution
-from ..monster_status import damage, choose_monster, obtain_xp, update_xp_required
-from ..classes import RegisterJourney, JourneyUpdate, Coords, JourneyType, User
 from ..exceptions import RouteNotFoundError
+from ..monster_status import (choose_monster, damage, obtain_xp,
+                              update_xp_required)
 
-MAP_QUEST_URL = 'http://www.mapquestapi.com/directions/v2/route'
-MAP_QUEST_KEY = os.environ['MAP_QUEST_API_KEY']
+MAP_QUEST_URL = "http://www.mapquestapi.com/directions/v2/route"
+MAP_QUEST_KEY = os.environ["MAP_QUEST_API_KEY"]
 
 
 def get_monster_damage(dst, fuel, type, pollution):
@@ -62,24 +64,22 @@ async def update_user(user: User, monster_damage, user_damage):
         new_xp_required = update_xp_required(stats)
         new_level = stats.lvl - 5 if stats.lvl - 5 > 1 else 1
 
-    await update_user_stats(
-        user_id=user.id,
-        hp=new_hp,
-        xp=new_xp,
-        level=new_level,
-        xp_required=new_xp_required)
+    await update_user_stats(user_id=user.id, hp=new_hp, xp=new_xp, level=new_level, xp_required=new_xp_required)
     return new_hp
 
 
 async def get_route(journey: RegisterJourney) -> Tuple[float, float]:
     async with aiohttp.ClientSession() as session:
-        parameters = {'key': MAP_QUEST_KEY, 'from': f'{journey.lat_start},{journey.lon_start}',
-                      'to': f'{journey.lat_end},{journey.lon_end}'}
+        parameters = {
+            "key": MAP_QUEST_KEY,
+            "from": f"{journey.lat_start},{journey.lon_start}",
+            "to": f"{journey.lat_end},{journey.lon_end}",
+        }
         async with session.get(MAP_QUEST_URL, params=parameters) as response:
             try:
                 road = await response.json()
-                distance = road['route']['distance']
-                fuel = road['route']['fuelUsed']
+                distance = road["route"]["distance"]
+                fuel = road["route"]["fuelUsed"]
             except KeyError:
                 raise RouteNotFoundError
         return distance, fuel
@@ -99,7 +99,5 @@ async def handle_journey_register(user_id: int, journey: RegisterJourney):
     await update_user(user, monster_damage, user_damage)
 
     new_usr = await get_user(user_id=user_id)
-    params = {'user': new_usr,
-              'distance': distance,
-              'fuel_saved': fuel}
+    params = {"user": new_usr, "distance": distance, "fuel_saved": fuel}
     return JourneyUpdate(**params)

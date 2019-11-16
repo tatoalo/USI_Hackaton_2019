@@ -1,9 +1,10 @@
-from sqlalchemy import select, join, literal_column
+from sqlalchemy import join, literal_column, select
 
+from ..classes import CurrentFight, Monster, Stats
+from ..classes import User as IntegrationUser
 from . import core
-from .models import User, UserStatistics, Fight
 from .connection import database_connection
-from ..classes import Monster, User as IntegrationUser, Stats, CurrentFight
+from .models import Fight, User, UserStatistics
 
 USER_STATISTICS_JOIN = join(User, UserStatistics, User.c.id == UserStatistics.c.user_id)
 USER_STATISTICS_FIGHT_JOIN = join(USER_STATISTICS_JOIN, Fight, User.c.id == Fight.c.user_id)
@@ -41,7 +42,7 @@ async def create_user(connection, *, user_name: str, user_icon: str, monster: Mo
 async def update_user_stats(connection, *, user_id: int, **attributes) -> Stats:
     """Update statistics of the user."""
     response = await core.update(connection, UserStatistics, UserStatistics.c.user_id == user_id, **attributes)
-    return Stats(**response[0], lvl=response[0]['level'])
+    return Stats(**response[0], lvl=response[0]["level"])
 
 
 @database_connection

@@ -1,6 +1,7 @@
-from typing import Dict, Any, List
+from typing import Any, Dict, List
 
 from elasticsearch import Elasticsearch
+
 from ..settings import BACKEND_SETTINGS
 
 es_connection = Elasticsearch(

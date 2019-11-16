@@ -1,6 +1,7 @@
 from typing import Generator
-from .core import search_index
+
 from ..classes import Bus, Coords
+from .core import search_index
 
 INDEX_NAME = "tpl_stops"
 

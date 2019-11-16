@@ -1,11 +1,12 @@
-from .elastic.tpl import get_stop, get_all_stops
-from .elastic.publibike import get_station, get_all_stations
-from .elastic.pollution import get_current_pollution
+from fastapi import APIRouter
+
+from . import classes as c
 from .database.monster import get_all_monsters, get_monster
 from .database.user import get_user
+from .elastic.pollution import get_current_pollution
+from .elastic.publibike import get_all_stations, get_station
+from .elastic.tpl import get_all_stops, get_stop
 from .logic.handlers import handle_journey_register
-from . import classes as c
-from fastapi import APIRouter
 
 app_router = APIRouter()
 

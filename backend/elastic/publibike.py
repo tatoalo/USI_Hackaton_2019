@@ -1,6 +1,7 @@
 from typing import Generator
-from .core import search_index
+
 from ..classes import Bikes, Coords
+from .core import search_index
 
 INDEX_NAME = "publibike_stations"
 

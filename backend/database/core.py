@@ -1,6 +1,7 @@
 from typing import List
+
 from asyncpg import Record
-from sqlalchemy import select, literal_column
+from sqlalchemy import literal_column, select
 
 from ..exceptions import ObjectNotFound
 
