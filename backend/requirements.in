@@ -6,5 +6,6 @@ asyncpgsa
 cchardet
 elasticsearch
 fastapi
+psycopg2-binary
 sqlalchemy
 uvicorn
