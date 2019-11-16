@@ -10,7 +10,7 @@ from . import classes as c
 
 app = FastAPI()
 
-@app.get("/monster/{id}")
+@app.get("/monsters/{id}")
 async def monsters(id: int):
     return await get_monster(monster_id=id)
 
