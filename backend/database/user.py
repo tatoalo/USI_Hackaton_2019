@@ -1,5 +1,5 @@
 from typing import Dict, List
-import asyncpg
+from asyncpg import Record
 from sqlalchemy import select, join, literal_column
 
 from . import core
@@ -13,7 +13,7 @@ USER_STATISTICS_FIGHT_JOIN = join(USER_STATISTICS_JOIN, Fight, User.c.id == Figh
 
 
 @database_connection
-async def get_user(connection, *, user_id: int, include_fight: bool = False) -> asyncpg.Record:
+async def get_user(connection, *, user_id: int, include_fight: bool = False) -> Record:
     on_join = USER_STATISTICS_FIGHT_JOIN if include_fight else USER_STATISTICS_JOIN
     on_select = (*User.c, *UserStatistics.c, *Fight.c) if include_fight else (*User.c, *UserStatistics.c)
     query = select(on_select).select_from(on_join).where(User.c.id == user_id)
@@ -38,12 +38,12 @@ async def create_user(connection, *, user_name: str, user_icon: str, monster: Mo
 
 
 @database_connection
-async def update_user_stats(connection, *, user_id: int, **attributes) -> List[Dict]:
+async def update_user_stats(connection, *, user_id: int, **attributes) -> List[Record]:
     return await core.update(connection, UserStatistics, UserStatistics.c.user_id == user_id, **attributes)
 
 
 @database_connection
-async def update_user_fight(connection, *, user_id: int, monster: Monster) -> List[Dict]:
+async def update_user_fight(connection, *, user_id: int, monster: Monster) -> List[Record]:
     return await core.update(
         connection, Fight, Fight.c.user_id == user_id, monster_id=monster.id, monster_hp=compute_monster_hp(monster.lvl)
     )
