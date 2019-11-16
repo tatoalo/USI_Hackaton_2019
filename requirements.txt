@@ -12,6 +12,7 @@ asyncpg==0.19.0
 asyncpgsa==0.26.1
 attrs==19.3.0             # via aiohttp
 cchardet==2.1.4
+certifi==2019.9.11
 cffi==1.13.2              # via pycares
 chardet==3.0.4            # via aiohttp
 click==7.0                # via uvicorn

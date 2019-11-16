@@ -4,6 +4,7 @@ alembic
 asyncpg
 asyncpgsa
 cchardet
+certifi
 elasticsearch
 fastapi
 numpy
