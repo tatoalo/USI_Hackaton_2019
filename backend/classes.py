@@ -100,5 +100,6 @@ class RegisterJourney(BaseModel):
 
 class JourneyUpdate(BaseModel):
     user: User
+    monster: Monster
     distance: float
     fuel_saved: float

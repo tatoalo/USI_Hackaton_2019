@@ -96,6 +96,7 @@ async def handle_journey_register(user_id: int, journey: RegisterJourney):
     await update_user(user, monster_damage, user_damage)
 
     new_usr = await get_user(user_id=user_id)
+    new_monster = await get_monster(monster_id=new_usr.current_fight.monster_id)
     asyncio.create_task(
         store_journey(
             journey.type,
@@ -105,4 +106,4 @@ async def handle_journey_register(user_id: int, journey: RegisterJourney):
             fuel,
         )
     )
-    return JourneyUpdate(user=new_usr, distance=distance, fuel_saved=fuel)
+    return JourneyUpdate(user=new_usr, monster=new_monster, distance=distance, fuel_saved=fuel)
