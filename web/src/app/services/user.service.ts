@@ -1,21 +1,19 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, Headers } from "@angular/common/http";
-import { environment } from "../../environments/environment";
+import {Injectable} from '@angular/core';
+import {HttpClient } from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import {User} from '../models/User';
 
-
-@Injectable
+@Injectable({
+  providedIn: 'root'
+})
 export class UserService {
-    url = environment.api_url + "/users"
+  url = environment.api_url + '/users';
 
-    constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-    public get_one(id: umber) {
-        return this.http.get(this.url + "/" + id)
-    }
+  public getUser(id: number) {
+    return this.http.get<User>(this.url + '/' + id);
+  }
 
-    public put_journey(id: number, type: string, lat_start: number, lon_start: number, lat_end: number, lon_end: number) {
-        let headers = new Headers();
-        headers.append("Content-Type", "application/json");
-        return this.http.put(this.url + "/" + id, JSON.stringify({type, lat_start, lon_start, lat_end, lon_end}), { headers })
-    }
 }

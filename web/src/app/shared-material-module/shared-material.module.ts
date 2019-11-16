@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import {
   MatButtonModule,
   MatCheckboxModule, MatChipsModule,
-  MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule,
+  MatDialogModule, MatDividerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatProgressBarModule,
   MatProgressSpinnerModule,
-  MatRippleModule, MatSnackBarModule, MatToolbarModule,
+  MatRippleModule, MatSelectModule, MatSnackBarModule, MatTabsModule, MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
 import {FormsModule} from '@angular/forms';
@@ -18,14 +18,18 @@ import {FormsModule} from '@angular/forms';
     CommonModule,
     MatRippleModule,
     MatButtonModule,
+    MatSelectModule,
     MatInputModule,
     MatChipsModule,
     FormsModule,
+    MatProgressBarModule,
     MatIconModule,
     MatToolbarModule,
     MatFormFieldModule,
+    MatDividerModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
+    MatTabsModule,
     // FlexLayoutModule,
     MatCheckboxModule,
     MatTooltipModule,

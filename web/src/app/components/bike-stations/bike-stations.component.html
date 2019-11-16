@@ -1,0 +1,19 @@
+<mat-form-field>
+  <mat-label>Start</mat-label>
+  <mat-select [(value)]="selectedStart" (selectionChange)="onStartSelect($event.value)">
+    <mat-option>None</mat-option>
+    <mat-option *ngFor="let st of bikeStations" [value]="st">
+      {{st.name}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field>
+  <mat-label>End</mat-label>
+  <mat-select [(value)]="selectedEnd" (selectionChange)="onEndSelect($event.value)">
+    <mat-option>None</mat-option>
+    <mat-option *ngFor="let st of bikeStations" [value]="st">
+      {{st.name}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

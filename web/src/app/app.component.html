@@ -1,3 +1,31 @@
 <mat-toolbar color="primary" class="toolbar mat-elevation-z4">
-  <button mat-button (click)="onClick">Action</button>
 </mat-toolbar>
+<app-user [user]="user$ | async"></app-user>
+<mat-tab-group [(selectedIndex)]="selectedTab" (selectedTabChange)="onTabChange($event)">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>directions_bike</mat-icon>
+    </ng-template>
+    <app-bike-stations
+      (startSelected)="startSelected($event)"
+      (endSelected)="endSelected($event)"
+    ></app-bike-stations>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>directions_bus</mat-icon>
+    </ng-template>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>directions_car</mat-icon>
+    </ng-template>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>directions_walk</mat-icon>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>
+<button mat-button (click)="onSubmit()">Action</button>
+<app-monster [monster]="monster$ | async"></app-monster>
