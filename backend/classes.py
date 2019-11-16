@@ -92,10 +92,10 @@ class Pollution(BaseModel):
 
 class RegisterJourney(BaseModel):
     type: JourneyType
-    lat_start: float
-    lon_start: float
-    lat_end: float
-    lon_end: float
+    lat_start: str
+    lon_start: str
+    lat_end: str
+    lon_end: str
 
 
 class JourneyUpdate(BaseModel):
