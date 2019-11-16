@@ -23,6 +23,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -93,6 +94,16 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
 
                         //print result of the get in case success callback
                         System.out.println(("Here" + response));
+
+                        try {
+                            JSONObject json= (JSONObject) new JSONTokener(response).nextValue();
+                            //JSONObject json2 = json.getJSONObject("name");
+                            String test = (String) json.get("name");
+                            System.out.println(test);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                     }
                 }, new Response.ErrorListener() {
             @Override
