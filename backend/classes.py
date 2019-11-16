@@ -33,7 +33,7 @@ class JourneyType(Enum):
     bike = "bike"
     walk = "walk"
     bus = "bus"
-    cat = "car"
+    car = "car"
 
 
 """
