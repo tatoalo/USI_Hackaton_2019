@@ -1,3 +1,5 @@
+from enum import Enum
+
 from pydantic import BaseModel
 
 """
@@ -20,12 +22,19 @@ class Stats(BaseModel):
     lvl: int
     hp: int
 
-class Current_fight(BaseModel):
+class CurrentFight(BaseModel):
     """
     Class that returns the current fight against a boss for a user.
     """
     monster_id: int
     monster_hp: int
+
+class JourneyType(Enum):
+    bike = "bike"
+    walk = "walk"
+    bus = "bus"
+    cat = "car"
+
 
 """
 Principal classes.
@@ -59,14 +68,14 @@ class Bikes(BaseModel):
     address: str
     coords: Coords
 
-class Users(BaseModel):
+class User(BaseModel):
   """
   Class that returns the information of a user.
   """
   name: str
   icon: str
   stats: Stats
-  current_fight: Current_fight
+  current_fight: CurrentFight
 
 class Pollution(BaseModel):
    """Class that returns the actual pollution."""
@@ -74,3 +83,14 @@ class Pollution(BaseModel):
    NO: float
    O3: float
    PM10: float
+
+class RegisterJourney(BaseModel):
+    type: JourneyType
+    start: Coords
+    end: Coords
+
+class JourneyUpdate(BaseModel):
+    distance: float
+    fuel_saved: float
+    monster_hp: int
+    hp: int
