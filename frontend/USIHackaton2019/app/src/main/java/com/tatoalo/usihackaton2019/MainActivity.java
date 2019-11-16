@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
     Spinner startData, stopData;
     RequestQueue requestQueue;
     String hpValueString = "50", xpValueString = "50", maxValueXp = "";
-    ArrayList<String> bikeAddresses = new ArrayList<String>();
+    List<String> bikeAddresses = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,13 +78,13 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
         hpValue.setProgress(Integer.parseInt(hpValueString), true);
         xpValue.setProgress(Integer.parseInt(xpValueString), true);
 
-        Spinner startData = findViewById(R.id.dataStart);
-        Spinner stopData = findViewById(R.id.dataStop);
+        //Spinner startData = findViewById(R.id.dataStart);
+        //Spinner stopData = findViewById(R.id.dataStop);
         String[] items = new String[]{"Test1", "Test2", "Test3"};
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
-        startData.setAdapter(adapter);
-        stopData.setAdapter(adapter);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, bikeAddresses);
+        //startData.setAdapter(adapter);
+        //stopData.setAdapter(adapter);
 
         dataBike.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
@@ -150,8 +151,26 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
                             try {
                                 JSONArray json = new JSONArray(response);
                                 //System.out.println(json.getJSONObject(count));
-                                System.out.println(json.length());
-                                count++;
+
+                                while(count < json.length()){
+                                    //System.out.println(json.getJSONObject(count).get("address"));
+                                    bikeAddresses.add(json.getJSONObject(count).get("address").toString());
+                                    count++;
+
+                                }
+
+                                /*ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, bikeAddresses);
+                                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spinner2.setAdapter(dataAdapter);*/
+                                Spinner startData = findViewById(R.id.dataStart);
+                                Spinner stopData = findViewById(R.id.dataStop);
+
+                                startData.setAdapter(adapter);
+                                stopData.setAdapter(adapter);
+
+
+
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
