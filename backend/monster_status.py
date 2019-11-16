@@ -46,7 +46,7 @@ def damage(id,pollution):
         NO = float(data[id]["NO"])/100
         O3 = float(data[id]["O3"])/100
         PM10 = float(data[id]["PM10"])/100
-    value = int(NO2*pollution["NO2"] + NO*pollution["NO"]  + O3*pollution["O3"]  + PM10*pollution["PM10"])
+    value = int(NO2*pollution.NO2 + NO*pollution.NO  + O3*pollution.O3  + PM10*pollution.PM10)
     value = random.randint(value - range_value, value + range_value)
     if value < minimun_damage:
         value = minimun_damage
@@ -55,10 +55,6 @@ def damage(id,pollution):
     value = random.choices([value,max_damage], [1 -critical,critical])[0]
     return value
 
-
-#damage(1,{"NO2":10.0, "NO":2.0,"O3":20.0,"PM10":10.0})
-#damage(1,{"NO2":100.0, "NO":100.0,"O3":100.0,"PM10":100.0})
-
 def gaussian(x, mu, sig):
     """
     Gaussian distribution
@@ -66,19 +62,12 @@ def gaussian(x, mu, sig):
     """
     return np.exp(-np.power(x - mu, 2.) / (2 * np.power(sig, 2.)))
 
-#monster1 = {"id":1,"icon":"ja","name":"pollutionGuy","lvl":3}
-#monster2 = {"id":2,"icon":"ja","name":"pollutionGuy","lvl":5}
-#monster3 = {"id":3,"icon":"ja","name":"pollutionGuy","lvl":6}
-#monster4 = {"id":4,"icon":"ja","name":"pollutionGuy","lvl":3}
-#monster5 = {"id":5,"icon":"ja","name":"pollutionGuy","lvl":1}
-#list_monsters = [monster1,monster2,monster3,monster4,monster5]
-
 def choose_monster(list_monsters,level):
     """
     Choose a monster depending the levels of the monsters and the level of the player.
     """
     level_list = []
     for i in list_monsters:
-        level_list.append(i["lvl"])
+        level_list.append(i.lvl)
     level_list = gaussian(np.array(level_list),level,desviation)
     return random.choices(list_monsters,level_list)
