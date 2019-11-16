@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -37,9 +38,10 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {//implements View.OnClickListener {
 
     EditText hp, xp;
+    TextView levelValue;
     ProgressBar hpValue, xpValue;
     ImageButton dataBike, dataBus;
-    ImageView playerImage;
+    ImageView playerImage, monsterImage;
     Spinner startData, stopData;
     static RequestQueue requestQueue;
     String hpValueString = "50", xpValueString = "50", maxValueXp = "";
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
     Button btnSaveData;
     EditText NO2, NO, O3, PM10;
     String dataTypeChoosen = "";
+    TextView hpMonsterValue, monsterLevelValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +69,9 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
 
         hpValue = (ProgressBar) findViewById(R.id.hpValue);
         xpValue = (ProgressBar) findViewById(R.id.xpValue);
+        levelValue = (TextView) findViewById(R.id.levelValue);
+        hpMonsterValue = (TextView) findViewById(R.id.hpMonsterValue);
+        monsterLevelValue = (TextView) findViewById(R.id.monsterLvlValue);
 
         hp.setFocusable(false);
         xp.setFocusable(false);
@@ -82,6 +88,7 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
         dataBus.setImageResource(R.drawable.bus);
 
         playerImage = (ImageView) findViewById(R.id.playerImg);
+        monsterImage = (ImageView) findViewById(R.id.monsterImage);
 
         //Init Values
         hpValue.setProgress(Integer.parseInt(hpValueString), true);
@@ -134,6 +141,7 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
         String urlBikes = "http://private-anon-5ec2e8c39d-hackaton4.apiary-mock.com/stations/bike";
         String urlBus = "https://private-anon-93fae61792-hackaton4.apiary-mock.com/stations/tpl";
         String urlPollution = "http://private-anon-5ec2e8c39d-hackaton4.apiary-mock.com/pollution";
+        String urlMonster = "https://private-anon-5ec2e8c39d-hackaton4.apiary-mock.com/monsters";
 
         // GET USERS
         StringRequest stringRequestUsers = new StringRequest(Request.Method.GET, urlUsers,
@@ -149,11 +157,43 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
                             hpValueString = (String) json2.get("hp");
                             xpValueString = (String) json2.get("xp");
                             maxValueXp = (String) json2.get("xp_required");
+                            levelValue.setText((String) json2.get("lvl"));
                             xpValue.setMax(Integer.parseInt(maxValueXp));
                             hpValue.setProgress(Integer.parseInt(hpValueString), true);
                             xpValue.setProgress(Integer.parseInt(xpValueString), true);
                             String urlImage = (String) json.get("icon");
-                            //Picasso.get().load(urlImage).into(playerImage);
+                            Picasso.get().load(urlImage).into(playerImage);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                //print error in case of failed callback
+                System.out.println("Errore: " + error.toString() );
+            }
+        });
+
+        // GET MONSTERS
+        StringRequest stringRequestMonster = new StringRequest(Request.Method.GET, urlMonster,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            //JSONObject json= (JSONObject) new JSONTokener(response).nextValue();
+                            //JSONObject json2 = json.getJSONObject("id");
+                            JSONArray json = new JSONArray(response);
+
+
+                            hpMonsterValue.setText(json.getJSONObject(0).get("max_hp").toString());
+                            monsterLevelValue.setText(json.getJSONObject(0).get("lvl").toString());
+
+                            String urlImage = json.getJSONObject(0).get("icon").toString();
+                            Picasso.get().load(urlImage).into(monsterImage);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -279,6 +319,7 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
         queue.add(stringRequestUsers);
         queue.add(stringRequestBikes);
         queue.add(stringRequestPollution);
+        queue.add(stringRequestMonster);
 
 
 
@@ -377,6 +418,7 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
                         xpValueString = (String) stats.get("xp");
                         maxValueXp = (String) stats.get("xp_required");
                         xpValue.setMax(Integer.parseInt(maxValueXp));
+                        levelValue.setText((String) stats.get("lvl"));
                         hpValue.setProgress(Integer.parseInt(hpValueString), true);
                         xpValue.setProgress(Integer.parseInt(xpValueString), true);
 
