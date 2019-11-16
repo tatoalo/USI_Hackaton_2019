@@ -1,5 +1,6 @@
 from asyncpgsa import pg
 from fastapi import FastAPI
+from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
 from starlette.responses import PlainTextResponse, Response
 
@@ -19,6 +20,14 @@ def create_app():
     async def startup():
         await pg.init(dsn=BACKEND_SETTINGS["database_url"], min_size=1, max_size=5)
         await insert_data()
+
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["http://localhost:4200"],
+        allow_credentials=True,
+        allow_methods=["GET, PUT"],
+        allow_headers=["*"],
+    )
 
     return app
 
