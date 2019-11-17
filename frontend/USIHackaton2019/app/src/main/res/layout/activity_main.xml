@@ -97,12 +97,10 @@
         android:id="@+id/monsterLvlValue"
         android:layout_width="20dp"
         android:layout_height="24dp"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="131dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="148dp"
         android:text="100"
         app:layout_constraintEnd_toStartOf="@+id/monsterImage"
-        app:layout_constraintStart_toEndOf="@+id/xp2"
         app:layout_constraintTop_toBottomOf="@+id/hpValueMonster" />
 
     <EditText
