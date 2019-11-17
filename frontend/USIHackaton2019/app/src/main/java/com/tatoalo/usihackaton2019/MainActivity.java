@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
 
     EditText hp, xp;
     TextView levelValue;
-    ProgressBar hpValue, xpValue;
+    ProgressBar hpValue, xpValue,hpValueMonster;
     ImageButton dataBike, dataBus;
     ImageView playerImage, monsterImage;
     Spinner startData, stopData;
@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
         PM10 = (EditText) findViewById(R.id.PM10Value);
 
         hpValue = (ProgressBar) findViewById(R.id.hpValue);
+        hpValueMonster = (ProgressBar) findViewById(R.id.hpValueMonster);
         xpValue = (ProgressBar) findViewById(R.id.xpValue);
         levelValue = (TextView) findViewById(R.id.levelValue);
         hpMonsterValue = (TextView) findViewById(R.id.hpMonsterValue);
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
         hp.setFocusable(false);
         xp.setFocusable(false);
         hpValue.setFocusable(false);
+        hpValueMonster.setFocusable(false);
         xpValue.setFocusable(false);
         NO2.setFocusable(false);
         NO.setFocusable(false);
@@ -92,6 +94,7 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
 
         //Init Values
         hpValue.setProgress(Integer.parseInt(hpValueString), true);
+        hpValueMonster.setProgress(Integer.parseInt(hpValueString), true);
         xpValue.setProgress(Integer.parseInt(xpValueString), true);
 
         String[] items = new String[]{"Test1", "Test2", "Test3"};
@@ -163,6 +166,9 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
                             xpValue.setProgress(Integer.parseInt(xpValueString), true);
                             String urlImage = (String) json.get("icon");
                             Picasso.get().load(urlImage).into(playerImage);
+
+                            //JSONObject currentFight = (JSONObject) json.getJSONObject("user").get("current_fight");
+                            //hpValueMonster.setProgress(Integer.parseInt(hpValueString), true);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
