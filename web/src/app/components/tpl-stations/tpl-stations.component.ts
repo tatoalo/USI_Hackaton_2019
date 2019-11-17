@@ -1,17 +1,19 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {BikeStation} from '../../models/BikeStation';
-import {StationService} from '../../services/station.service';
 import {Coords} from '../../models/Coords';
+import {StationService} from '../../services/station.service';
+import {TplStation} from '../../models/TplStation';
 
 @Component({
-  selector: 'app-bike-stations',
-  templateUrl: './bike-stations.component.html',
-  styleUrls: ['./bike-stations.component.css']
+  selector: 'app-tpl-stations',
+  templateUrl: './tpl-stations.component.html',
+  styleUrls: ['./tpl-stations.component.css']
 })
-export class BikeStationsComponent implements OnInit {
-  bikeStations: BikeStation[];
-  selectedStart: BikeStation;
-  selectedEnd: BikeStation;
+export class TplStationsComponent implements OnInit {
+
+  tplStations: TplStation[];
+  selectedStart: TplStation;
+  selectedEnd: TplStation;
 
   @Output() startSelected: EventEmitter<Coords> = new EventEmitter();
   @Output() endSelected: EventEmitter<Coords> = new EventEmitter();
@@ -20,7 +22,7 @@ export class BikeStationsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.stationService.getAllBikeStations().subscribe(b => this.bikeStations = b);
+    this.stationService.getAllTPLStations().subscribe(b => this.tplStations = b);
   }
 
   onStartSelect(selection: BikeStation) {
@@ -34,4 +36,5 @@ export class BikeStationsComponent implements OnInit {
       this.endSelected.emit(selection.coords);
     }
   }
+
 }

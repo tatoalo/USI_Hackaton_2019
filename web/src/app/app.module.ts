@@ -12,6 +12,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { BikeStationsComponent } from './components/bike-stations/bike-stations.component';
 import { CarsComponent } from './components/cars/cars.component';
 import {FormsModule} from '@angular/forms';
+import { TplStationsComponent } from './components/tpl-stations/tpl-stations.component';
+import { PollutionComponent } from './components/pollution/pollution.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import {FormsModule} from '@angular/forms';
     UserComponent,
     MonsterComponent,
     BikeStationsComponent,
-    CarsComponent
+    CarsComponent,
+    TplStationsComponent,
+    PollutionComponent
   ],
   imports: [
     BrowserModule,

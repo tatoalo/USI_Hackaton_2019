@@ -1,0 +1,9 @@
+<mat-toolbar-row>
+  <span style="padding-right: 10px">Current pollution levels:</span>
+  <mat-chip-list *ngIf="pollution">
+    <mat-chip><span>NO:</span>{{pollution.NO}}</mat-chip>
+    <mat-chip><span>NO<sub>2</sub>:</span>{{pollution.NO2}}</mat-chip>
+    <mat-chip><span>O<sub>3</sub>:</span>{{pollution.O3}}</mat-chip>
+    <mat-chip><span>PM<sub>10</sub>:</span>{{pollution.PM10}}</mat-chip>
+  </mat-chip-list>
+</mat-toolbar-row>

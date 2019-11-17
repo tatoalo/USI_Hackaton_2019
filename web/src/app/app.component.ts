@@ -7,7 +7,7 @@ import {User} from './models/User';
 import {switchMap, tap} from 'rxjs/operators';
 import {Monster} from './models/Monster';
 import {Coords} from './models/Coords';
-import {MatTabChangeEvent} from '@angular/material';
+import {MatSnackBar, MatTabChangeEvent} from '@angular/material';
 
 class CoordGroup {
   constructor() {
@@ -38,9 +38,11 @@ export class AppComponent implements OnInit {
   transportType = 'bike';
   selectedTab: number;
   coordGroup = new CoordGroup();
+  dirty = false;
 
   constructor(private userService: UserService,
-              private monsterService: MonsterService) {
+              private monsterService: MonsterService,
+              private snackBar: MatSnackBar) {
 
   }
 
@@ -53,20 +55,25 @@ export class AppComponent implements OnInit {
   }
 
   startSelected(coords: Coords, type: string) {
+    this.dirty = true;
     this.transportType = type;
     this.coordGroup[type].start = coords;
   }
 
   endSelected(coords: Coords, type: string) {
+    this.dirty = true;
     this.transportType = type;
     this.coordGroup[type].end = coords;
   }
 
   onSubmit() {
+    this.dirty = false;
     const start = this.coordGroup[this.transportType].start;
     const end = this.coordGroup[this.transportType].end;
     if (start && end) {
-      this.userService.registerJourney(this.user.id, start, end, this.transportType).subscribe(
+      this.userService.registerJourney(this.user.id, start, end, this.transportType).pipe(
+        tap(e => this.snackBar.open('Saved:' + e.fuel_saved))
+      ).subscribe(
         u => {
           this.user = u.user;
           this.monster = u.monster;
