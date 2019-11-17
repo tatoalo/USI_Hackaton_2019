@@ -1,0 +1,14 @@
+<div style="height: 250px">
+  <img *ngIf="user" class="user-icon float-left" src="{{user.icon}}"/>
+  <h1 *ngIf="user">{{user.name}}</h1>
+  <h4 *ngIf="user">Level: {{user.stats.lvl}}</h4>
+  <div class="row">
+    <div *ngIf="user">{{user.stats.hp}} out of 100 HP</div>
+    <mat-progress-bar style="width:200px; height: 5px;" *ngIf="user" mode="determinate" [value]="user.stats.hp"></mat-progress-bar>
+    
+    <div *ngIf="user">{{user.stats.xp}} out of {{user.stats.xp_required}} XP</div>
+    <mat-progress-bar style="width:200px; height: 5px;" *ngIf="user" mode="determinate"
+                      [value]="user.stats.xp * (100/user.stats.xp_required)"></mat-progress-bar>
+  </div>
+</div>
+<mat-divider vertical="{{false}}"></mat-divider>

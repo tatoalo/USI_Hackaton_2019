@@ -1,0 +1,16 @@
+<mat-toolbar-row>
+  <span style="padding-right: 10px">Current pollution levels:</span>
+  <mat-chip-list *ngIf="pollution">
+    <mat-chip [ngStyle]="{'background-color': getColor(pollution.NO, 'NO')}">
+      <span>NO:</span>{{pollution.NO}}
+    </mat-chip>
+    <mat-chip [ngStyle]="{'background-color': getColor(pollution.NO2, 'NO2')}">
+      <span>NO<sub>2</sub>:</span>{{pollution.NO2}}
+    </mat-chip>
+    <mat-chip [ngStyle]="{'background-color': getColor(pollution.O3, 'O3')}"><span>O<sub>3</sub>:</span>{{pollution.O3}}
+    </mat-chip>
+    <mat-chip [ngStyle]="{'background-color': getColor(pollution.PM10, 'PM10')}">
+      <span>PM<sub>10</sub>:</span>{{pollution.PM10}}
+    </mat-chip>
+  </mat-chip-list>
+</mat-toolbar-row>

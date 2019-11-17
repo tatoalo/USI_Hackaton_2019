@@ -1,0 +1,7 @@
+<button mat-raised-button style="float: right; margin-top: 5px; margin-bottom: 5px;" class="col-md-1" color="warn" (click)="onSubmit()">Reset</button>
+<agm-map [latitude]=46.0059756288262 [longitude]=8.95245559479334 [zoom]=14 disableDoubleClickZoom=true
+         (mapClick)="mapOnClick($event)">
+    <agm-marker *ngIf="startPoint" [latitude]="startPoint.lat" [longitude]="startPoint.lon"
+                label="S"></agm-marker>
+    <agm-marker *ngIf="endPoint" [latitude]="endPoint.lat" [longitude]="endPoint.lon" label="E"></agm-marker>
+</agm-map>
