@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
     Button btnSaveData;
     EditText NO2, NO, O3, PM10;
     String dataTypeChoosen = "";
-    TextView hpMonsterValue, monsterLevelValue;
+    TextView  monsterLevelValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
         hpValueMonster = (ProgressBar) findViewById(R.id.hpValueMonster);
         xpValue = (ProgressBar) findViewById(R.id.xpValue);
         levelValue = (TextView) findViewById(R.id.levelValue);
-        hpMonsterValue = (TextView) findViewById(R.id.hpMonsterValue);
         monsterLevelValue = (TextView) findViewById(R.id.monsterLvlValue);
 
         hp.setFocusable(false);
@@ -164,9 +163,12 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
                             xpValue.setMax(Integer.parseInt(maxValueXp));
                             hpValue.setProgress(Integer.parseInt(hpValueString), true);
                             xpValue.setProgress(Integer.parseInt(xpValueString), true);
+                            //JSONObject currentFight = (JSONObject) json.getJSONObject("user").get("current_fight");
+                            //hpValueMonster.setProgress(Integer.valueOf(currentFight.get("monster_hp").toString()), true);
                             String urlImage = (String) json.get("icon");
                             Picasso.get().load(urlImage).into(playerImage);
-
+                            JSONObject currentFight = (JSONObject) json.getJSONObject("current_fight");
+                            hpValueMonster.setProgress(Integer.valueOf(currentFight.get("monster_hp").toString()), true);
                             //JSONObject currentFight = (JSONObject) json.getJSONObject("user").get("current_fight");
                             //hpValueMonster.setProgress(Integer.parseInt(hpValueString), true);
                         } catch (JSONException e) {
@@ -195,9 +197,7 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
                             JSONArray json = new JSONArray(response);
 
 
-                            hpMonsterValue.setText(json.getJSONObject(0).get("max_hp").toString());
                             monsterLevelValue.setText(json.getJSONObject(0).get("lvl").toString());
-
                             String urlImage = json.getJSONObject(0).get("icon").toString();
                             Picasso.get().load(urlImage).into(monsterImage);
                         } catch (JSONException e) {
@@ -443,8 +443,7 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
                         levelValue.setText(stats.get("lvl").toString());
                         hpValue.setProgress(Integer.valueOf(hpValueString), true);
                         xpValue.setProgress(Integer.valueOf(xpValueString), true);
-                        hpMonsterValue.setText(currentFight.get("monster_hp").toString());
-
+                        hpValueMonster.setProgress(Integer.valueOf(currentFight.get("monster_hp").toString()), true);
                         monsterLevelValue.setText(monster.get("lvl").toString());
 
                         String urlImage = monster.get("icon").toString();
