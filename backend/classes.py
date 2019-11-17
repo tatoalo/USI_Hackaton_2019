@@ -91,7 +91,7 @@ class Pollution(BaseModel):
 
 
 class RegisterJourney(BaseModel):
-    type: str
+    type: JourneyType
     lat_start: float
     lon_start: float
     lat_end: float
@@ -100,5 +100,6 @@ class RegisterJourney(BaseModel):
 
 class JourneyUpdate(BaseModel):
     user: User
+    monster: Monster
     distance: float
     fuel_saved: float

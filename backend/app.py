@@ -25,7 +25,7 @@ def create_app():
         CORSMiddleware,
         allow_origins=["http://localhost:4200"],
         allow_credentials=True,
-        allow_methods=["GET, PUT"],
+        allow_methods=["GET", "PUT"],
         allow_headers=["*"],
     )
 
