@@ -42,6 +42,7 @@ async def update_user(user: User, monster_damage: int, user_damage: int) -> int:
 
     if fight.monster_hp - monster_damage <= 0:
         monsters = await get_all_monsters()
+        monsters = [m for m in monsters if user.current_fight.monster_id != m.id]
         monster = choose_monster(monsters, user.stats.lvl)
         new_xp = stats.xp + obtain_xp(await get_monster(monster_id=fight.monster_id))
         while new_xp >= new_xp_required:

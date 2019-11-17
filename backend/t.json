@@ -1,0 +1,353 @@
+[
+    {
+        "id": 40,
+        "name": "Morcote",
+        "address": "Riva Dal Garavéll 8",
+        "coords": {
+            "lat": 45.9242,
+            "lon": 8.9192
+        }
+    },
+    {
+        "id": 41,
+        "name": "Melide",
+        "address": "Via alla Bola",
+        "coords": {
+            "lat": 45.953905,
+            "lon": 8.949715
+        }
+    },
+    {
+        "id": 42,
+        "name": "Arte e Cultura LAC",
+        "address": "Via Antonio Caccia",
+        "coords": {
+            "lat": 45.998453,
+            "lon": 8.94848
+        }
+    },
+    {
+        "id": 43,
+        "name": "Campo Marzio",
+        "address": "Viale Castagnola 4",
+        "coords": {
+            "lat": 46.005849,
+            "lon": 8.961709
+        }
+    },
+    {
+        "id": 44,
+        "name": "Tesserete",
+        "address": "Piazza Stazione",
+        "coords": {
+            "lat": 46.065999,
+            "lon": 8.966679
+        }
+    },
+    {
+        "id": 45,
+        "name": "Stadio",
+        "address": "Via Trevano 100",
+        "coords": {
+            "lat": 46.023159,
+            "lon": 8.959919
+        }
+    },
+    {
+        "id": 46,
+        "name": "Via Ciani",
+        "address": "Via Giacomo E Filippo Ciani",
+        "coords": {
+            "lat": 46.021942,
+            "lon": 8.962901
+        }
+    },
+    {
+        "id": 47,
+        "name": "Pregassona",
+        "address": "Via Terzerina",
+        "coords": {
+            "lat": 46.02398,
+            "lon": 8.968292
+        }
+    },
+    {
+        "id": 48,
+        "name": "USI",
+        "address": "Via Giuseppe Buffi 13",
+        "coords": {
+            "lat": 46.0105808,
+            "lon": 8.95794
+        }
+    },
+    {
+        "id": 49,
+        "name": "Contrada di Verla",
+        "address": "Via Pretorio \\/ Piazza Mercato",
+        "coords": {
+            "lat": 46.005653,
+            "lon": 8.951857
+        }
+    },
+    {
+        "id": 50,
+        "name": "Fornaci",
+        "address": "Via Pian Scairolo 9",
+        "coords": {
+            "lat": 45.984764,
+            "lon": 8.932378
+        }
+    },
+    {
+        "id": 51,
+        "name": "Paradiso Centro",
+        "address": "Via Franco Zorzi",
+        "coords": {
+            "lat": 45.991081,
+            "lon": 8.943799
+        }
+    },
+    {
+        "id": 146,
+        "name": "Stazione FFS",
+        "address": "Via Clemente Maraini P+R",
+        "coords": {
+            "lat": 46.004469,
+            "lon": 8.947096
+        }
+    },
+    {
+        "id": 205,
+        "name": "Manno Parco Giova",
+        "address": "Via Norello 4",
+        "coords": {
+            "lat": 46.032852,
+            "lon": 8.921806
+        }
+    },
+    {
+        "id": 206,
+        "name": "Magliaso FLP",
+        "address": "Via Stazione  18",
+        "coords": {
+            "lat": 45.982042,
+            "lon": 8.883593
+        }
+    },
+    {
+        "id": 207,
+        "name": "Sorengo Parco Sportivo",
+        "address": "Via al Laghetto 5",
+        "coords": {
+            "lat": 46.001154,
+            "lon": 8.934162
+        }
+    },
+    {
+        "id": 208,
+        "name": "Caslano FLP",
+        "address": "Via Stazione 77",
+        "coords": {
+            "lat": 45.977309,
+            "lon": 8.875447
+        }
+    },
+    {
+        "id": 209,
+        "name": "Manno Centro di Calcolo",
+        "address": "Via Cantonale 16",
+        "coords": {
+            "lat": 46.022676,
+            "lon": 8.917196
+        }
+    },
+    {
+        "id": 210,
+        "name": "Agno FLP",
+        "address": "Via Stazione 2",
+        "coords": {
+            "lat": 45.996253,
+            "lon": 8.900957
+        }
+    },
+    {
+        "id": 245,
+        "name": "Molinazzo",
+        "address": "Via Longa",
+        "coords": {
+            "lat": 46.012749,
+            "lon": 8.914699
+        }
+    },
+    {
+        "id": 247,
+        "name": "Bioggio Via Industria",
+        "address": "Via Industria 31",
+        "coords": {
+            "lat": 46.020356,
+            "lon": 8.916114
+        }
+    },
+    {
+        "id": 248,
+        "name": "Cappella-Agnuzzo FLP",
+        "address": "Cappella-Agnuzzo",
+        "coords": {
+            "lat": 45.993326,
+            "lon": 8.924532
+        }
+    },
+    {
+        "id": 249,
+        "name": "Muzzano Industria",
+        "address": "Via Industria",
+        "coords": {
+            "lat": 46.000482,
+            "lon": 8.912639
+        }
+    },
+    {
+        "id": 288,
+        "name": "Montagnola Piazza Brocchi",
+        "address": "Piazza Brocchi",
+        "coords": {
+            "lat": 45.982056,
+            "lon": 8.918121
+        }
+    },
+    {
+        "id": 289,
+        "name": "Massagno",
+        "address": "via dei Platani,",
+        "coords": {
+            "lat": 46.012555,
+            "lon": 8.943487
+        }
+    },
+    {
+        "id": 377,
+        "name": "Viganello",
+        "address": "Via la Santa",
+        "coords": {
+            "lat": 46.0121344,
+            "lon": 8.9657021
+        }
+    },
+    {
+        "id": 378,
+        "name": "Via Ginevra",
+        "address": "via Ginevra",
+        "coords": {
+            "lat": 46.0082843,
+            "lon": 8.9512745
+        }
+    },
+    {
+        "id": 379,
+        "name": "Lambertenghi",
+        "address": "Via Bertaro Lambertenghi",
+        "coords": {
+            "lat": 46.0084322,
+            "lon": 8.9575686
+        }
+    },
+    {
+        "id": 380,
+        "name": "Via Dei Faggi",
+        "address": "Viale dei Faggi",
+        "coords": {
+            "lat": 46.0090116,
+            "lon": 8.9638054
+        }
+    },
+    {
+        "id": 381,
+        "name": "Piazza Molino Nuovo",
+        "address": "Piazza Molino Nuovo",
+        "coords": {
+            "lat": 46.012252,
+            "lon": 8.955118
+        }
+    },
+    {
+        "id": 382,
+        "name": "Bigogno - Campo sportivo",
+        "address": "Via Collina d'Oro",
+        "coords": {
+            "lat": 45.972202,
+            "lon": 8.915525
+        }
+    },
+    {
+        "id": 434,
+        "name": "Via Crocetta",
+        "address": "Via Crocetta",
+        "coords": {
+            "lat": 46.0159412,
+            "lon": 8.9668282
+        }
+    },
+    {
+        "id": 435,
+        "name": "Ospedale Italiano di Lugano",
+        "address": "Via Pietro Cappelli",
+        "coords": {
+            "lat": 46.009713,
+            "lon": 8.96008
+        }
+    },
+    {
+        "id": 436,
+        "name": "Casa Serena",
+        "address": "Via Marco da Carona 10-12",
+        "coords": {
+            "lat": 46.013865,
+            "lon": 8.958952
+        }
+    },
+    {
+        "id": 437,
+        "name": "Via Ceresio",
+        "address": "Via Ceresio",
+        "coords": {
+            "lat": 46.01876,
+            "lon": 8.96429
+        }
+    },
+    {
+        "id": 438,
+        "name": "Piazza Manzoni",
+        "address": "Piazza Manzoni",
+        "coords": {
+            "lat": 46.0036519,
+            "lon": 8.9529036
+        }
+    },
+    {
+        "id": 440,
+        "name": "Via Beltramina",
+        "address": "Via Beltramina 16",
+        "coords": {
+            "lat": 46.0166117,
+            "lon": 8.9596513
+        }
+    },
+    {
+        "id": 441,
+        "name": "Paradiso Stazione FFS",
+        "address": "Via Carona",
+        "coords": {
+            "lat": 45.989126,
+            "lon": 8.946661
+        }
+    },
+    {
+        "id": 494,
+        "name": "Caslano Piazza Lago",
+        "address": "Piazza Lago",
+        "coords": {
+            "lat": 45.970318,
+            "lon": 8.88374
+        }
+    }
+]
