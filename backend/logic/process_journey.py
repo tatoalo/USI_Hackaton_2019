@@ -35,13 +35,13 @@ def get_user_damage(fuel: float, type: JourneyType) -> int:
     return user_damage
 
 
-def get_new_level(current_xp: int, xp_required: int, current_level: int) -> Tuple[int, int]:
+def get_new_level(current_xp: int, xp_required: int, current_level: int) -> Tuple[int, int, int]:
     new_level = current_level
     while current_xp >= xp_required:
         current_xp -= xp_required
         new_level += 1
         xp_required = update_xp_required(new_level)
-    return new_level, current_xp
+    return new_level, current_xp, xp_required
 
 
 async def update_user(user: User, monster_damage: int, user_damage: int) -> int:
@@ -55,13 +55,15 @@ async def update_user(user: User, monster_damage: int, user_damage: int) -> int:
         monsters = await get_all_monsters()
         monsters = [m for m in monsters if user.current_fight.monster_id != m.id]
         monster = choose_monster(monsters, user.stats.lvl)
-        new_level, new_xp = get_new_level(stats.xp + obtain_xp(monster_object), new_xp_required, new_level)
+        new_level, new_xp, new_xp_required = get_new_level(
+            stats.xp + obtain_xp(monster_object), new_xp_required, new_level
+        )
         await create_new_user_fight(user_id=user.id, monster=monster)
     # deduce HP from the monster, update XP for making a damage
     else:
         # add XP only in case damage was caused to the monster
         if monster_damage > 0:
-            new_level, new_xp = get_new_level(
+            new_level, new_xp, new_xp_required = get_new_level(
                 stats.xp + int(math.sqrt(obtain_xp(monster_object))), new_xp_required, new_level
             )
         await update_user_fight(user_id=user.id, new_monster_hp=fight.monster_hp - monster_damage)
