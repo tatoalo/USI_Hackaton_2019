@@ -39,7 +39,15 @@
       <ng-template mat-tab-label>
         <mat-icon>directions_walk</mat-icon>
       </ng-template>
+      <app-walks
+        [dirty]="dirty"
+        (startSelected)="startSelected($event, 'walk')"
+        (endSelected)="endSelected($event, 'walk')"
+      ></app-walks>
     </mat-tab>
   </mat-tab-group>
-  <button mat-raised-button (click)="onSubmit()">Submit</button>
+  <div class="col-md-2 col-md-offset-5">
+    <button mat-raised-button (click)="onSubmit()" class="col-md-12" color="primary" 
+            style="margin-top: 5px; margin-bottom: 5px;">Submit</button>
+  </div>
 </div>

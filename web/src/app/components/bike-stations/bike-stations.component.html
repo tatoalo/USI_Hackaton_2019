@@ -1,5 +1,5 @@
-<div>
-  <mat-form-field>
+<div class="col-md-12 station-selector">
+  <mat-form-field class="col-md-4 col-md-offset-4">
     <mat-label>Start</mat-label>
     <mat-select [(value)]="selectedStart" (selectionChange)="onStartSelect($event.value)">
       <mat-option>None</mat-option>
@@ -10,8 +10,8 @@
   </mat-form-field>
 </div>
 
-<div>
-  <mat-form-field>
+<div class="col-md-12 station-selector">
+  <mat-form-field class="col-md-4 col-md-offset-4">
     <mat-label>End</mat-label>
     <mat-select [(value)]="selectedEnd" (selectionChange)="onEndSelect($event.value)">
       <mat-option>None</mat-option>

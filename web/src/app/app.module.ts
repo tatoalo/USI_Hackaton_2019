@@ -11,6 +11,7 @@ import {MatTabsModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { BikeStationsComponent } from './components/bike-stations/bike-stations.component';
 import { CarsComponent } from './components/cars/cars.component';
+import { WalksComponent } from './components/walks/walks.component';
 import {FormsModule} from '@angular/forms';
 import { TplStationsComponent } from './components/tpl-stations/tpl-stations.component';
 import { PollutionComponent } from './components/pollution/pollution.component';
@@ -23,7 +24,8 @@ import { PollutionComponent } from './components/pollution/pollution.component';
     BikeStationsComponent,
     CarsComponent,
     TplStationsComponent,
-    PollutionComponent
+    PollutionComponent,
+    WalksComponent
   ],
   imports: [
     BrowserModule,
