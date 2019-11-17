@@ -1,2 +1,11 @@
-<img *ngIf="monster" class="monster-icon" src="{{monster.icon}}"/>
-<div *ngIf="monster">{{monster.max_hp}}</div>
+<div style="height: 250px; text-align: right;">
+<img *ngIf="monster" class="monster-icon float-right" src="{{monster.icon}}"/>
+<h1 *ngIf="monster">{{monster.name}}</h1>
+<h4 *ngIf="monster">Level: <strong>{{monster.lvl}}</strong></h4>
+<div class="row">
+    <div *ngIf="monster">{{fight.monster_hp}} out of {{monster.max_hp}} HP</div>
+    <mat-progress-bar style="width:200px; height: 5px; float: right;" *ngIf="monster" mode="determinate" 
+                      [value]="fight.monster_hp / monster.max_hp * 100"></mat-progress-bar>
+</div>
+</div>
+<mat-divider vertical="{{false}}"></mat-divider>

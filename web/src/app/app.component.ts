@@ -3,12 +3,11 @@ import {MonsterService} from './services/monster.service';
 import {PollutionService} from './services/pollution.service';
 import {StationService} from './services/station.service';
 import {UserService} from './services/user.service';
-import {Observable} from 'rxjs';
-import {switchMap, tap} from 'rxjs/operators';
 import {User} from './models/User';
-import {MatTabChangeEvent} from '@angular/material';
-import {Coords} from './models/Coords';
+import {switchMap, tap} from 'rxjs/operators';
 import {Monster} from './models/Monster';
+import {Coords} from './models/Coords';
+import {MatTabChangeEvent} from '@angular/material';
 
 class CoordGroup {
   constructor() {

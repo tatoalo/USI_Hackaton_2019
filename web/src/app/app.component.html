@@ -1,31 +1,36 @@
 <mat-toolbar color="primary" class="toolbar mat-elevation-z4">
 </mat-toolbar>
-<app-user [user]="user"></app-user>
-<mat-tab-group [(selectedIndex)]="selectedTab" (selectedTabChange)="onTabChange($event)">
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <mat-icon>directions_bike</mat-icon>
-    </ng-template>
-    <app-bike-stations
-      (startSelected)="startSelected($event, 'bike')"
-      (endSelected)="endSelected($event, 'bike')"
-    ></app-bike-stations>
-  </mat-tab>
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <mat-icon>directions_bus</mat-icon>
-    </ng-template>
-  </mat-tab>
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <mat-icon>directions_car</mat-icon>
-    </ng-template>
-  </mat-tab>
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <mat-icon>directions_walk</mat-icon>
-    </ng-template>
-  </mat-tab>
-</mat-tab-group>
-<button mat-button (click)="onSubmit()">Action</button>
-<app-monster [monster]="monster"></app-monster>
+<div class="col-md-12 row">
+  <app-user [user]="user" class="col-md-6"></app-user>
+  <app-monster [monster]="monster" [fight]="user && user.current_fight" class="col-md-6"></app-monster>
+</div>
+<div class="col-md-12">
+  <mat-tab-group mat-stretch-tabs [(selectedIndex)]="selectedTab" (selectedTabChange)="onTabChange($event)">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>directions_bike</mat-icon>
+      </ng-template>
+      <app-bike-stations
+        (startSelected)="startSelected($event, 'bike')"
+        (endSelected)="endSelected($event, 'bike')"
+      ></app-bike-stations>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>directions_bus</mat-icon>
+      </ng-template>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>directions_car</mat-icon>
+      </ng-template>
+      <app-cars></app-cars>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>directions_walk</mat-icon>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+  <button mat-button (click)="onSubmit()">Action</button>
+</div>

@@ -4,20 +4,20 @@ import {Fight} from '../../models/User';
 import {MonsterService} from '../../services/monster.service';
 
 @Component({
-  selector: 'app-monster',
-  templateUrl: './monster.component.html',
-  styleUrls: ['./monster.component.css']
+  selector: 'app-cars',
+  templateUrl: './cars.component.html',
+  styleUrls: ['./cars.component.css']
 })
-export class MonsterComponent implements OnInit {
-
-  @Input() monster: Monster;
-
-  @Input() fight: Fight;
+export class CarsComponent implements OnInit {
 
   constructor() {
   }
 
   ngOnInit() {
+  }
+
+  mapOnClick(event: MouseEvent) {
+    console.log(event)
   }
 
 }
