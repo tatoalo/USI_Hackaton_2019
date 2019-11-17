@@ -6,18 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ProgressBar
-        android:id="@+id/hpValueMonster"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="144dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="75dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="22dp"
-        app:layout_constraintEnd_toStartOf="@+id/monsterImage"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hpLabel" />
-
     <ImageButton
         android:id="@+id/dataTypeBus"
         android:layout_width="94dp"
@@ -329,8 +317,8 @@
         android:id="@+id/hpLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="112dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginStart="149dp"
+        android:layout_marginTop="105dp"
         android:text="HP"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dataStop" />
@@ -339,8 +327,8 @@
         android:id="@+id/hpMonsterValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="105dp"
         android:text="100"
         app:layout_constraintStart_toEndOf="@+id/hpLabel"
         app:layout_constraintTop_toBottomOf="@+id/dataStop" />
