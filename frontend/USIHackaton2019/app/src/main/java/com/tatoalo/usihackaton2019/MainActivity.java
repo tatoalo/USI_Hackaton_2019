@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
     Button btnSaveData;
     EditText NO2, NO, O3, PM10;
     String dataTypeChoosen = "";
-    TextView  monsterLevelValue;
+    TextView  monsterLevelValue, username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +58,8 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
         setContentView(R.layout.activity_main);
 
         btnSaveData = (Button) findViewById(R.id.btnSave);
+
+        username = (TextView) findViewById(R.id.userName);
 
         hp = (EditText) findViewById(R.id.hp);
         xp = (EditText) findViewById(R.id.xp);
@@ -154,7 +156,7 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
         dataWalk.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 dataTypeChoosen = "walk";
-                dataWalk.setBackgroundDrawable(dataCar.getBackground());
+                dataWalk.setBackgroundDrawable(dataWalk.getBackground());
                 dataWalk.setBackgroundResource(R.drawable.btn_border);
                 startData = findViewById(R.id.dataStart);
                 stopData = findViewById(R.id.dataStop);
@@ -192,6 +194,7 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
                             xpValueString =  json2.get("xp").toString();
                             maxValueXp =  json2.get("xp_required").toString();
                             levelValue.setText(json2.get("lvl").toString());
+                            username.setText(json.get("name").toString());
                             xpValue.setMax(Integer.parseInt(maxValueXp));
                             hpValue.setProgress(Integer.parseInt(hpValueString), true);
                             xpValue.setProgress(Integer.parseInt(xpValueString), true);

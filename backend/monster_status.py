@@ -78,11 +78,11 @@ def choose_monster(list_monsters, level):
     return random.choices(list_monsters, level_list)[0]
 
 
-def update_xp_required(stat):
+def update_xp_required(level: int) -> int:
     """
     Update the xp required for player
     """
-    xp_required = (2 ** (stat.lvl + 1)) * 10
+    xp_required = (2 ** (level + 1)) * 10
     return xp_required
 
 

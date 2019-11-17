@@ -97,12 +97,10 @@
         android:id="@+id/monsterLvlValue"
         android:layout_width="20dp"
         android:layout_height="24dp"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="131dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="148dp"
         android:text="100"
         app:layout_constraintEnd_toStartOf="@+id/monsterImage"
-        app:layout_constraintStart_toEndOf="@+id/xp2"
         app:layout_constraintTop_toBottomOf="@+id/hpValueMonster" />
 
     <EditText
@@ -362,5 +360,17 @@
         android:text="100"
         app:layout_constraintStart_toEndOf="@+id/levelLabel"
         app:layout_constraintTop_toBottomOf="@+id/playerImg" />
+
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="5dp"
+        android:text="userName"
+        app:layout_constraintBottom_toTopOf="@+id/playerImg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
