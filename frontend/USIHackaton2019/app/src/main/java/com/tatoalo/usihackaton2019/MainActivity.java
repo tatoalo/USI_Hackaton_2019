@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
     EditText hp, xp;
     TextView levelValue;
     ProgressBar hpValue, xpValue,hpValueMonster;
-    ImageButton dataBike, dataBus;
+    ImageButton dataBike, dataBus, dataCar;
     ImageView playerImage, monsterImage;
     Spinner startData, stopData;
     static RequestQueue requestQueue;
@@ -87,6 +87,8 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
         dataBike.setImageResource(R.drawable.bike);
         dataBus = (ImageButton) findViewById(R.id.dataTypeBus);
         dataBus.setImageResource(R.drawable.bus);
+        dataCar = (ImageButton) findViewById(R.id.dataTypeCar);
+        dataCar.setImageResource(R.drawable.car);
 
         playerImage = (ImageView) findViewById(R.id.playerImg);
         monsterImage = (ImageView) findViewById(R.id.monsterImage);
@@ -129,6 +131,20 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
 
                 startData.setAdapter(busAdapter);
                 stopData.setAdapter(busAdapter);
+
+            }
+        });
+
+        dataCar.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                dataTypeChoosen = "car";
+                dataCar.setBackgroundDrawable(dataCar.getBackground());
+                dataCar.setBackgroundResource(R.drawable.btn_border);
+                startData = findViewById(R.id.dataStart);
+                stopData = findViewById(R.id.dataStop);
+
+                startData.setAdapter(bikeAdapter);
+                stopData.setAdapter(bikeAdapter);
 
             }
         });

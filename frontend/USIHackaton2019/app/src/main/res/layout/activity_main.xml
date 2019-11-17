@@ -7,17 +7,30 @@
     android:layout_height="match_parent">
 
     <ImageButton
-        android:id="@+id/dataTypeBus"
+        android:id="@+id/dataTypeCar"
         android:layout_width="94dp"
         android:layout_height="51dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="150dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="39dp"
+        android:layout_marginEnd="21dp"
         android:adjustViewBounds="true"
         android:backgroundTint="#00FFFFFF"
         android:scaleType="centerInside"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/dataTypeBus"
+        app:layout_constraintTop_toBottomOf="@+id/xpValue" />
+
+    <ImageButton
+        android:id="@+id/dataTypeBus"
+        android:layout_width="94dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="9dp"
+        android:adjustViewBounds="true"
+        android:backgroundTint="#00FFFFFF"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toStartOf="@+id/dataTypeCar"
         app:layout_constraintStart_toEndOf="@+id/dataTypeBike"
         app:layout_constraintTop_toBottomOf="@+id/xpValue" />
 
@@ -25,14 +38,11 @@
         android:id="@+id/dataTypeBike"
         android:layout_width="94dp"
         android:layout_height="51dp"
-        android:layout_marginStart="140dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="216dp"
+        android:layout_marginStart="89dp"
+        android:layout_marginTop="36dp"
         android:adjustViewBounds="true"
         android:backgroundTint="#00FFFFFF"
         android:scaleType="centerInside"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.923"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/xp"
         tools:srcCompat="@drawable/bike" />
@@ -164,41 +174,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
-        android:id="@+id/dataStart"
-        android:layout_width="210dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="106dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="75dp"
-        android:background="@android:drawable/btn_dropdown"
-        android:spinnerMode="dropdown"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dataTypeBus" />
-
-    <Spinner
         android:id="@+id/dataStop"
         android:layout_width="210dp"
         android:layout_height="38dp"
         android:layout_marginStart="106dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="52dp"
         android:layout_marginEnd="95dp"
         android:background="@android:drawable/btn_dropdown"
         android:spinnerMode="dropdown"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dataStart" />
-
-    <TextView
-        android:id="@+id/stopText"
-        android:layout_width="wrap_content"
-        android:layout_height="19dp"
-        android:layout_marginStart="104dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="278dp"
-        android:text="Stop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -218,7 +201,46 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dataTypeBike"
-        app:layout_constraintVertical_bias="0.933" />
+        app:layout_constraintVertical_bias="0.818" />
+
+    <Spinner
+        android:id="@+id/dataStart"
+        android:layout_width="210dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="106dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="75dp"
+        android:background="@android:drawable/btn_dropdown"
+        android:spinnerMode="dropdown"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dataTypeBus" />
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="284dp"
+        android:layout_marginEnd="39dp"
+        android:text="Save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dataStop" />
+
+    <TextView
+        android:id="@+id/stopText"
+        android:layout_width="wrap_content"
+        android:layout_height="19dp"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="278dp"
+        android:text="Stop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dataStart" />
 
     <EditText
         android:id="@+id/O3Value"
@@ -313,18 +335,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/NOValue"
         app:layout_constraintStart_toEndOf="@+id/NO2Value" />
-
-    <Button
-        android:id="@+id/btnSave"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="284dp"
-        android:layout_marginEnd="39dp"
-        android:text="Save"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dataStop" />
 
     <TextView
         android:id="@+id/levelLabel"
