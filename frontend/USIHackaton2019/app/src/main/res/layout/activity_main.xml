@@ -7,16 +7,27 @@
     android:layout_height="match_parent">
 
     <ImageButton
-        android:id="@+id/dataTypeCar"
+        android:id="@+id/dataTypeWalk"
         android:layout_width="94dp"
         android:layout_height="51dp"
-        android:layout_marginStart="9dp"
-        android:layout_marginTop="39dp"
-        android:layout_marginEnd="21dp"
+        android:layout_marginTop="36dp"
         android:adjustViewBounds="true"
         android:backgroundTint="#00FFFFFF"
         android:scaleType="centerInside"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dataTypeCar"
+        app:layout_constraintTop_toBottomOf="@+id/xpValue" />
+
+    <ImageButton
+        android:id="@+id/dataTypeCar"
+        android:layout_width="94dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="1dp"
+        android:adjustViewBounds="true"
+        android:backgroundTint="#00FFFFFF"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toStartOf="@+id/dataTypeWalk"
         app:layout_constraintStart_toEndOf="@+id/dataTypeBus"
         app:layout_constraintTop_toBottomOf="@+id/xpValue" />
 
@@ -24,13 +35,10 @@
         android:id="@+id/dataTypeBus"
         android:layout_width="94dp"
         android:layout_height="51dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="9dp"
+        android:layout_marginTop="36dp"
         android:adjustViewBounds="true"
         android:backgroundTint="#00FFFFFF"
         android:scaleType="centerInside"
-        app:layout_constraintEnd_toStartOf="@+id/dataTypeCar"
         app:layout_constraintStart_toEndOf="@+id/dataTypeBike"
         app:layout_constraintTop_toBottomOf="@+id/xpValue" />
 
@@ -38,13 +46,14 @@
         android:id="@+id/dataTypeBike"
         android:layout_width="94dp"
         android:layout_height="51dp"
-        android:layout_marginStart="89dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="10dp"
         android:adjustViewBounds="true"
         android:backgroundTint="#00FFFFFF"
         android:scaleType="centerInside"
+        app:layout_constraintEnd_toStartOf="@+id/dataTypeBus"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/xp"
+        app:layout_constraintTop_toBottomOf="@+id/levelLabel"
         tools:srcCompat="@drawable/bike" />
 
     <ImageView
@@ -192,16 +201,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="104dp"
-        android:layout_marginTop="40dp"
         android:layout_marginEnd="277dp"
         android:layout_marginBottom="9dp"
         android:text="Start"
         app:layout_constraintBottom_toTopOf="@+id/dataStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dataTypeBike"
-        app:layout_constraintVertical_bias="0.818" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Spinner
         android:id="@+id/dataStart"
@@ -352,9 +358,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="11dp"
         android:layout_marginTop="6dp"
-        android:layout_marginEnd="117dp"
         android:text="100"
-        app:layout_constraintEnd_toStartOf="@+id/dataTypeBus"
         app:layout_constraintStart_toEndOf="@+id/levelLabel"
         app:layout_constraintTop_toBottomOf="@+id/playerImg" />
 

@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
     EditText hp, xp;
     TextView levelValue;
     ProgressBar hpValue, xpValue,hpValueMonster;
-    ImageButton dataBike, dataBus, dataCar;
+    ImageButton dataBike, dataBus, dataCar, dataWalk;
     ImageView playerImage, monsterImage;
     Spinner startData, stopData;
     static RequestQueue requestQueue;
@@ -89,6 +89,8 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
         dataBus.setImageResource(R.drawable.bus);
         dataCar = (ImageButton) findViewById(R.id.dataTypeCar);
         dataCar.setImageResource(R.drawable.car);
+        dataWalk = (ImageButton) findViewById(R.id.dataTypeWalk);
+        dataWalk.setImageResource(R.drawable.walk);
 
         playerImage = (ImageView) findViewById(R.id.playerImg);
         monsterImage = (ImageView) findViewById(R.id.monsterImage);
@@ -140,6 +142,20 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
                 dataTypeChoosen = "car";
                 dataCar.setBackgroundDrawable(dataCar.getBackground());
                 dataCar.setBackgroundResource(R.drawable.btn_border);
+                startData = findViewById(R.id.dataStart);
+                stopData = findViewById(R.id.dataStop);
+
+                startData.setAdapter(bikeAdapter);
+                stopData.setAdapter(bikeAdapter);
+
+            }
+        });
+
+        dataWalk.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                dataTypeChoosen = "walk";
+                dataWalk.setBackgroundDrawable(dataCar.getBackground());
+                dataWalk.setBackgroundResource(R.drawable.btn_border);
                 startData = findViewById(R.id.dataStart);
                 stopData = findViewById(R.id.dataStop);
 
