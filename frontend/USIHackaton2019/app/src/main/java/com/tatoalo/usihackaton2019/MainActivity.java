@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {//implements View.OnClickLi
         dataWalk.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 dataTypeChoosen = "walk";
-                dataWalk.setBackgroundDrawable(dataCar.getBackground());
+                dataWalk.setBackgroundDrawable(dataWalk.getBackground());
                 dataWalk.setBackgroundResource(R.drawable.btn_border);
                 startData = findViewById(R.id.dataStart);
                 stopData = findViewById(R.id.dataStop);
