@@ -72,7 +72,11 @@ export class AppComponent implements OnInit {
     const end = this.coordGroup[this.transportType].end;
     if (start && end) {
       this.userService.registerJourney(this.user.id, start, end, this.transportType).pipe(
-        tap(e => this.snackBar.open('Saved:' + e.fuel_saved))
+        tap(e => {
+          const showFuel = this.transportType !== 'bus' && this.transportType !== 'car';
+          const msg = 'Distance: ' + e.distance + 'km' + (showFuel ? ', Fuel saved: ' + e.fuel_saved + 'l' : '');
+          this.snackBar.open(msg, 'Cool!', {duration: 2000});
+        })
       ).subscribe(
         u => {
           this.user = u.user;
