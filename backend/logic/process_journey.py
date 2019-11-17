@@ -1,11 +1,12 @@
 import asyncio
+import math
 import os
 from typing import Tuple
 
 import aiohttp
 from backend.database.user import create_new_user_fight, get_user, update_user_fight, update_user_stats
 
-from ..classes import Coords, JourneyType, JourneyUpdate, Pollution, RegisterJourney, User
+from ..classes import Coords, JourneyType, JourneyUpdate, Monster, Pollution, RegisterJourney, User
 from ..database.monster import get_all_monsters, get_monster
 from ..elastic.pollution import get_current_pollution
 from ..exceptions import RouteNotFoundError
@@ -34,33 +35,45 @@ def get_user_damage(fuel: float, type: JourneyType) -> int:
     return user_damage
 
 
-async def update_user(user: User, monster_damage: int, user_damage: int) -> int:
-    stats, fight = user.stats, user.current_fight
-    new_level = stats.lvl
-    new_xp = stats.xp
-    new_xp_required = stats.xp_required
+def get_new_level(current_xp: int, xp_required: int, current_level: int) -> Tuple[int, int]:
+    new_level = current_level
+    while current_xp >= xp_required:
+        current_xp -= xp_required
+        new_level += 1
+        xp_required = update_xp_required(new_level)
+    return new_level, current_xp
 
+
+async def update_user(user: User, monster_damage: int, user_damage: int) -> int:
+    """Update user stats and fight info after a journey registration."""
+    stats, fight = user.stats, user.current_fight
+    new_level, new_xp, new_xp_required = stats.lvl, stats.xp, stats.xp_required
+    monster_object: Monster = await get_monster(monster_id=fight.monster_id)
+
+    # the monster was killed by performing this journey
     if fight.monster_hp - monster_damage <= 0:
         monsters = await get_all_monsters()
         monsters = [m for m in monsters if user.current_fight.monster_id != m.id]
         monster = choose_monster(monsters, user.stats.lvl)
-        new_xp = stats.xp + obtain_xp(await get_monster(monster_id=fight.monster_id))
-        while new_xp >= new_xp_required:
-            new_xp -= new_xp_required
-            new_level += 1
-            stats.lvl = new_level
-            new_xp_required = update_xp_required(stats)
+        new_level, new_xp = get_new_level(stats.xp + obtain_xp(monster_object), new_xp_required, new_level)
         await create_new_user_fight(user_id=user.id, monster=monster)
+    # deduce HP from the monster, update XP for making a damage
     else:
+        # add XP only in case damage was caused to the monster
+        if monster_damage > 0:
+            new_level, new_xp = get_new_level(
+                stats.xp + int(math.sqrt(obtain_xp(monster_object))), new_xp_required, new_level
+            )
         await update_user_fight(user_id=user.id, new_monster_hp=fight.monster_hp - monster_damage)
 
+    # update user depending on level (set to 100 if level changed)
     new_hp = stats.hp - user_damage if stats.lvl == new_level else 100
+
+    # if a user died
     if new_hp <= 0:
-        new_hp = 100
-        stats.lvl -= 5
-        new_xp = 0
-        new_xp_required = update_xp_required(stats)
-        new_level = stats.lvl - 5 if stats.lvl - 5 > 1 else 1
+        new_hp, new_xp = 100, 0
+        new_level = new_level - 5 if new_level - 5 > 1 else 1
+        new_xp_required = update_xp_required(new_level)
 
     await update_user_stats(user_id=user.id, hp=new_hp, xp=new_xp, level=new_level, xp_required=new_xp_required)
     return new_hp
