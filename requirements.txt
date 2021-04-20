@@ -5,37 +5,79 @@
 #    pip-compile requirements.in
 #
 aiodns==2.0.0
+    # via -r requirements.in
 aiohttp==3.6.2
+    # via -r requirements.in
 alembic==1.3.1
-async-timeout==3.0.1      # via aiohttp
-asyncpg==0.19.0
+    # via -r requirements.in
+async-timeout==3.0.1
+    # via aiohttp
+asyncpg==0.21.0
+    # via
+    #   -r requirements.in
+    #   asyncpgsa
 asyncpgsa==0.26.1
-attrs==19.3.0             # via aiohttp
+    # via -r requirements.in
+attrs==19.3.0
+    # via aiohttp
 cchardet==2.1.4
+    # via -r requirements.in
 certifi==2019.9.11
-cffi==1.13.2              # via pycares
-chardet==3.0.4            # via aiohttp
-click==7.0                # via uvicorn
+    # via -r requirements.in
+cffi==1.13.2
+    # via pycares
+chardet==3.0.4
+    # via aiohttp
+click==7.0
+    # via uvicorn
 elasticsearch==7.1.0
+    # via -r requirements.in
 fastapi==0.42.0
-h11==0.8.1                # via uvicorn
-httptools==0.0.13         # via uvicorn
-idna==2.8                 # via yarl
-mako==1.1.0               # via alembic
-markupsafe==1.1.1         # via mako
-multidict==4.5.2          # via aiohttp, yarl
+    # via -r requirements.in
+h11==0.8.1
+    # via uvicorn
+httptools==0.0.13
+    # via uvicorn
+idna==2.8
+    # via yarl
+mako==1.1.0
+    # via alembic
+markupsafe==1.1.1
+    # via mako
+multidict==4.5.2
+    # via
+    #   aiohttp
+    #   yarl
 numpy==1.17.4
+    # via -r requirements.in
 psycopg2-binary==2.8.4
-pycares==3.0.0            # via aiodns
-pycparser==2.19           # via cffi
-pydantic==0.32.2          # via fastapi
-python-dateutil==2.8.1    # via alembic
-python-editor==1.0.4      # via alembic
-six==1.13.0               # via python-dateutil
+    # via -r requirements.in
+pycares==3.0.0
+    # via aiodns
+pycparser==2.19
+    # via cffi
+pydantic==0.32.2
+    # via fastapi
+python-dateutil==2.8.1
+    # via alembic
+python-editor==1.0.4
+    # via alembic
+six==1.13.0
+    # via python-dateutil
 sqlalchemy==1.3.11
-starlette==0.12.9         # via fastapi
-urllib3==1.25.7           # via elasticsearch
+    # via
+    #   -r requirements.in
+    #   alembic
+    #   asyncpgsa
+starlette==0.12.9
+    # via fastapi
+urllib3==1.25.7
+    # via elasticsearch
 uvicorn==0.10.8
-uvloop==0.14.0            # via uvicorn
-websockets==8.1           # via uvicorn
-yarl==1.3.0               # via aiohttp
+    # via -r requirements.in
+uvloop==0.14.0
+    # via uvicorn
+websockets==8.1
+    # via uvicorn
+yarl==1.3.0
+    # via aiohttp
